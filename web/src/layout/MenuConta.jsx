@@ -6,6 +6,7 @@ import { useMe } from '../conta/consultas.js';
 // Itens do menu da conta; os PRs da Etapa 2 acrescentam "Minhas listas" e "Atividade".
 const ITENS = [
   { para: '/me/diario', rotulo: 'Diário' },
+  { para: '/me/listas', rotulo: 'Minhas listas' },
   { para: '/me', rotulo: 'Perfil' },
 ];
 

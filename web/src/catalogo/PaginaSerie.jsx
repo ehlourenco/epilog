@@ -1,6 +1,8 @@
 import { Link, useParams } from 'react-router';
 import { Carregando, Erro, Vazio } from '../componentes/Estados.jsx';
 import { Poster } from '../componentes/Poster.jsx';
+import { BotaoQueroAssistir } from '../listas/BotaoQueroAssistir.jsx';
+import { SeletorListas } from '../listas/SeletorListas.jsx';
 import { AvisoCache } from './AvisoCache.jsx';
 import { useSerie } from './consultas.js';
 
@@ -49,6 +51,10 @@ export function PaginaSerie() {
             <p className="max-w-prose leading-relaxed">
               {serie.sinopse ?? 'Sem sinopse disponível.'}
             </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            <BotaoQueroAssistir tmdbId={String(serie.tmdbId)} />
+            <SeletorListas tmdbId={String(serie.tmdbId)} />
           </div>
         </div>
       </div>
