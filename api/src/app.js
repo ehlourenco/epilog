@@ -6,6 +6,7 @@ import { ErroApi, tratadorDeErros } from './erros.js';
 import { criarRotasEstado } from './estado/rotas.js';
 import { criarAuth } from './middleware/auth.js';
 import { criarRotasPerfis } from './perfis/rotas.js';
+import { criarRotasSocial } from './social/rotas.js';
 
 export function criarApp({ config, clientes, catalogo }) {
   const app = express();
@@ -22,6 +23,7 @@ export function criarApp({ config, clientes, catalogo }) {
   api.use(criarRotasPerfis({ exigir }));
   api.use(criarRotasDiario({ exigir }));
   api.use(criarRotasEstado({ exigir }));
+  api.use(criarRotasSocial({ exigir }));
 
   app.use('/api', api);
   app.use((req, res, next) => next(new ErroApi(404, 'rota_nao_encontrada', 'Rota não encontrada.')));

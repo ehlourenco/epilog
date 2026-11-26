@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import { Carregando, Erro, Vazio } from '../componentes/Estados.jsx';
+import { BotaoSeguir } from '../social/BotaoSeguir.jsx';
 import { usePerfil } from './consultas.js';
 
 const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
@@ -20,6 +21,7 @@ export function PaginaPerfilPublico() {
       <header className="space-y-2">
         <h1 className="text-3xl font-bold">@{p.apelido}</h1>
         {p.souEu && <p className="text-sm text-destaque">Este é você</p>}
+        <BotaoSeguir apelido={p.apelido} euSigo={p.euSigo} souEu={p.souEu} />
         <p className="text-sm text-texto-suave">No EpiLog desde {desde(p.criadoEm)}</p>
         <ul className="flex gap-6 text-sm">
           <li>
