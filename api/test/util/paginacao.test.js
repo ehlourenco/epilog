@@ -13,3 +13,14 @@ test('chave fora do formato esperado → 400', () =>
   expect(() => decodificarCursor(codificarCursor({ chave: 'x),id.gt.0', id: 1 }), /^\d{4}-\d{2}-\d{2}$/)).toThrow(
     expect.objectContaining({ codigo: 'cursor_invalido' }),
   ));
+
+test('id fora do inteiro seguro (1e21) → 400', () =>
+  expect(() => decodificarCursor(codificarCursor({ chave: '2026-11-25', id: 1e21 }))).toThrow(
+    expect.objectContaining({ codigo: 'cursor_invalido' }),
+  ));
+
+test('aceita uma função como validador da chave', () => {
+  const cursor = codificarCursor({ chave: 'b', id: 1 });
+  expect(decodificarCursor(cursor, (c) => c === 'b')).toEqual({ chave: 'b', id: 1 });
+  expect(() => decodificarCursor(cursor, (c) => c === 'a')).toThrow(expect.objectContaining({ status: 400 }));
+});

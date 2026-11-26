@@ -66,3 +66,22 @@ test('DELETE de registro que não é seu (ou não existe) → 404', async () => 
   expect(r.status).toBe(404);
   expect(r.body.erro.codigo).toBe('registro_nao_encontrado');
 });
+
+test('ID de série acima do inteiro do banco no estado da temporada → 400 sem tocar no banco', async () => {
+  const db = criarDbFalso({});
+  const r = await request(criarAppDeTeste({ db }))
+    .get('/api/me/series/2147483648/temporadas/1')
+    .set('Authorization', 'Bearer bom');
+  expect(r.status).toBe(400);
+  expect(db.registro).toHaveLength(0);
+});
+
+test('cursor bem formado com data inexistente → 400 sem tocar no banco', async () => {
+  const db = criarDbFalso({});
+  const r = await request(criarAppDeTeste({ db }))
+    .get(`/api/me/diario?antes=${codificarCursor({ chave: '2026-13-45', id: 1 })}`)
+    .set('Authorization', 'Bearer bom');
+  expect(r.status).toBe(400);
+  expect(r.body.erro.codigo).toBe('cursor_invalido');
+  expect(db.registro).toHaveLength(0);
+});

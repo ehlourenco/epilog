@@ -1,9 +1,6 @@
 import { Router } from 'express';
-import { z } from 'zod';
 import { traduzirErroBanco } from '../erros.js';
-
-const ID_INVALIDO = { error: 'Identificador inválido.' };
-const idTmdb = z.coerce.number(ID_INVALIDO).int(ID_INVALIDO).positive(ID_INVALIDO);
+import { idPositivo as idTmdb } from '../util/validacao.js';
 
 function semErro({ data, error }) {
   if (error) throw traduzirErroBanco(error);

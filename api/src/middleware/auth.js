@@ -16,7 +16,9 @@ export function criarAuth(clientes) {
     if (tipo !== 'Bearer' || !token) throw tokenInvalido();
 
     const { data, error } = await clientes.anonimo.auth.getUser(token);
-    if (error && (error.status ?? 500) >= 500) {
+    // auth-js devolve falhas de rede como AuthRetryableFetchError com status 0: isso é indisponibilidade,
+    // não token inválido — responder 401 faria o front deslogar o usuário por um soluço de rede.
+    if (error && (!error.status || error.status >= 500)) {
       throw new ErroApi(503, 'autenticacao_indisponivel', 'Não foi possível validar sua sessão agora.');
     }
     if (error || !data?.user) throw tokenInvalido();

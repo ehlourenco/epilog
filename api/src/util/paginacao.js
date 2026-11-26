@@ -6,11 +6,14 @@ export function codificarCursor({ chave, id }) {
   return Buffer.from(JSON.stringify({ chave, id })).toString('base64url');
 }
 
-// `formatoChave` restringe a chave (ex.: data AAAA-MM-DD) antes de ela chegar a qualquer filtro do banco.
-export function decodificarCursor(texto, formatoChave = /^.+$/) {
+// `validarChave` (regex ou função) restringe a chave — ex.: data AAAA-MM-DD que exista — antes de ela chegar
+// a qualquer filtro do banco; o id precisa ser um inteiro seguro positivo.
+export function decodificarCursor(texto, validarChave = /^.+$/) {
+  const chaveValida = typeof validarChave === 'function' ? validarChave : (c) => validarChave.test(c);
   try {
     const valor = JSON.parse(Buffer.from(texto, 'base64url').toString('utf8'));
-    if (typeof valor?.chave !== 'string' || !formatoChave.test(valor.chave) || !Number.isInteger(valor.id)) {
+    const idValido = Number.isSafeInteger(valor?.id) && valor.id > 0;
+    if (typeof valor?.chave !== 'string' || !chaveValida(valor.chave) || !idValido) {
       throw new Error('cursor fora do formato');
     }
     return { chave: valor.chave, id: valor.id };

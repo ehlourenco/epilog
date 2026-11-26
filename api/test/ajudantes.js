@@ -50,12 +50,16 @@ export function criarDbFalso(respostas = {}) {
   };
 }
 
-// O token 'bom' é aceito como o usuário 'u1'; qualquer outro é recusado.
+// O token 'bom' é aceito como o usuário 'u1'; 'rede' simula falha de rede até o Supabase Auth
+// (auth-js devolve AuthRetryableFetchError com status 0); qualquer outro é recusado.
 const authFalso = {
-  getUser: async (token) =>
-    token === 'bom'
-      ? { data: { user: { id: 'u1' } }, error: null }
-      : { data: { user: null }, error: { status: 401, message: 'invalid JWT' } },
+  getUser: async (token) => {
+    if (token === 'bom') return { data: { user: { id: 'u1' } }, error: null };
+    if (token === 'rede') {
+      return { data: { user: null }, error: { status: 0, name: 'AuthRetryableFetchError', message: 'fetch failed' } };
+    }
+    return { data: { user: null }, error: { status: 401, message: 'invalid JWT' } };
+  },
 };
 
 export function criarAppDeTeste({ db = criarDbFalso(), catalogo = {} } = {}) {

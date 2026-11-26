@@ -26,3 +26,9 @@ test('token válido chega à rota pessoal com o usuário do token', async () => 
   expect(r.body).toEqual({ id: 'u1', apelido: 'enzo', criadoEm: '2026-11-25T00:00:00Z' });
   expect(db.registro).toContainEqual(['perfil', 'eq', ['id', 'u1']]);
 });
+
+test('falha de rede até o Supabase Auth → 503, não 401 (não pode deslogar o usuário)', async () => {
+  const r = await request(criarAppDeTeste()).get('/api/saude').set('Authorization', 'Bearer rede');
+  expect(r.status).toBe(503);
+  expect(r.body.erro.codigo).toBe('autenticacao_indisponivel');
+});

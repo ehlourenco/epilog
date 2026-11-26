@@ -65,7 +65,9 @@ export function PaginaTemporada() {
   const meuEstado = useMeuEstadoTemporada(tmdbId, n, { enabled: Boolean(temporada) });
 
   if (isPending) return <Carregando />;
-  if (isError && error.status === 404) return <Vazio mensagem="Temporada não encontrada." />;
+  // 400 = identificador malformado na URL; para quem digitou, é o mesmo que não existir.
+  if (isError && [400, 404].includes(error.status))
+    return <Vazio mensagem="Temporada não encontrada." />;
   if (isError) return <Erro erro={error} aoTentarDeNovo={refetch} />;
 
   const titulo =

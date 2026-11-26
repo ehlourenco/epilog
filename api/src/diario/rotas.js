@@ -1,16 +1,13 @@
 import { Router } from 'express';
-import { z } from 'zod';
 import { urlPoster } from '../catalogo/mapeadores.js';
 import { ErroApi, traduzirErroBanco } from '../erros.js';
 import { decodificarCursor, paginar, TAMANHO_PAGINA } from '../util/paginacao.js';
-import { criarEsquemasDiario } from './esquemas.js';
+import { idPositivo, numeroTemporada } from '../util/validacao.js';
+import { criarEsquemasDiario, dataExiste, FORMATO_DATA } from './esquemas.js';
 
 const SELECT_ENTRADA =
   'id, assistido_em, revisita, episodio:episodio_id(id, numero, nome, temporada:temporada_id(numero, serie:serie_id(tmdb_id, nome, poster_path)))';
-const FORMATO_DATA = /^\d{4}-\d{2}-\d{2}$/;
-const ID_INVALIDO = { error: 'Identificador inválido.' };
-const idPositivo = z.coerce.number(ID_INVALIDO).int(ID_INVALIDO).positive(ID_INVALIDO);
-const numeroTemporada = z.coerce.number(ID_INVALIDO).int(ID_INVALIDO).min(0, ID_INVALIDO);
+const chaveDeData = (chave) => FORMATO_DATA.test(chave) && dataExiste(chave);
 const naoEncontrado = () => new ErroApi(404, 'registro_nao_encontrado', 'Registro não encontrado no seu diário.');
 
 function semErro({ data, error }, mapa) {
@@ -39,7 +36,7 @@ export function criarRotasDiario({ exigir, hoje }) {
   const { novaEntrada, edicaoEntrada } = criarEsquemasDiario({ hoje });
 
   rotas.get('/me/diario', exigir, async (req, res) => {
-    const cursor = req.query.antes ? decodificarCursor(String(req.query.antes), FORMATO_DATA) : null;
+    const cursor = req.query.antes ? decodificarCursor(String(req.query.antes), chaveDeData) : null;
     let consulta = req.db
       .from('diario')
       .select(SELECT_ENTRADA)

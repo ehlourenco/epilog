@@ -39,7 +39,9 @@ export async function api(caminho, { metodo = 'GET', corpo } = {}) {
 
   if (!resposta.ok) {
     const codigo = json?.erro?.codigo ?? 'erro_desconhecido';
-    if (resposta.status === 401 && codigo === 'token_invalido') await supabase.auth.signOut();
+    // Só nesta aba: o padrão do supabase-js ('global') derrubaria as sessões em todos os dispositivos.
+    if (resposta.status === 401 && codigo === 'token_invalido')
+      await supabase.auth.signOut({ scope: 'local' });
     throw new ErroDaApi(resposta.status, codigo, json?.erro?.mensagem ?? 'Algo deu errado.');
   }
   return json;

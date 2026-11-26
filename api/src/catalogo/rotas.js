@@ -1,9 +1,7 @@
 import { Router } from 'express';
 import { z } from 'zod';
+import { idPositivo as idTmdb, numeroTemporada } from '../util/validacao.js';
 
-const ID_INVALIDO = { error: 'Identificador inválido.' };
-const idTmdb = z.coerce.number(ID_INVALIDO).int(ID_INVALIDO).positive(ID_INVALIDO);
-const numeroTemporada = z.coerce.number(ID_INVALIDO).int(ID_INVALIDO).min(0, ID_INVALIDO);
 const busca = z.object({
   q: z
     .string({ error: 'Digite o nome de uma série.' })

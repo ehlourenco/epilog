@@ -48,3 +48,13 @@ test('série inexistente → 404 com código', async () => {
   expect(r.status).toBe(404);
   expect(r.body.erro.codigo).toBe('nao_encontrado_no_catalogo');
 });
+
+test.each(['/api/series/2147483648', '/api/series/1399/temporadas/2147483648'])(
+  'ID acima do inteiro do banco (%s) → 400 sem consultar o catálogo',
+  async (url) => {
+    const r = await request(app).get(url);
+    expect(r.status).toBe(400);
+    expect(catalogo.obterSerie).not.toHaveBeenCalled();
+    expect(catalogo.obterTemporada).not.toHaveBeenCalled();
+  },
+);
