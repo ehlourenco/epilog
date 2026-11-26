@@ -3,7 +3,8 @@
   "private": true,
   "description": "EpiLog — diário e catálogo de séries de TV (OTES-02, UDESC)",
   "workspaces": [
-    "api"
+    "api",
+    "web"
   ],
   "engines": {
     "node": ">=24"
