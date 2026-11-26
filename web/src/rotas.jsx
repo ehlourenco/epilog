@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router';
 import { RotaProtegida } from './auth/RotaProtegida.jsx';
+import { PaginaAvaliacao } from './avaliacoes/PaginaAvaliacao.jsx';
 import { PaginaInicio } from './catalogo/PaginaInicio.jsx';
 import { PaginaSerie } from './catalogo/PaginaSerie.jsx';
 import { PaginaTemporada } from './catalogo/PaginaTemporada.jsx';
@@ -18,6 +19,14 @@ export const roteador = createBrowserRouter([
       { index: true, element: <PaginaInicio /> },
       { path: 'series/:tmdbId', element: <PaginaSerie /> },
       { path: 'series/:tmdbId/temporadas/:n', element: <PaginaTemporada /> },
+      {
+        path: 'series/:tmdbId/avaliacao',
+        element: (
+          <RotaProtegida>
+            <PaginaAvaliacao />
+          </RotaProtegida>
+        ),
+      },
       { path: 'entrar', element: <PaginaEntrar /> },
       {
         path: 'me',

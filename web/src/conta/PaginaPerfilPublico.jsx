@@ -1,4 +1,5 @@
 import { useParams } from 'react-router';
+import { ListaResenhas } from '../avaliacoes/ListaResenhas.jsx';
 import { Carregando, Erro, Vazio } from '../componentes/Estados.jsx';
 import { usePerfil } from './consultas.js';
 
@@ -30,6 +31,13 @@ export function PaginaPerfilPublico() {
           </li>
         </ul>
       </header>
+      <section className="space-y-3">
+        <h2 className="text-xl font-semibold">Resenhas</h2>
+        <ListaResenhas
+          filtros={{ autorApelido: p.apelido }}
+          vazio="Nenhuma resenha publicada ainda."
+        />
+      </section>
     </article>
   );
 }
