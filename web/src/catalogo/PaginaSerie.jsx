@@ -1,12 +1,21 @@
-import { Link, useParams } from 'react-router';
+import { Link, useNavigate, useParams } from 'react-router';
+import { useAuth } from '../auth/contexto.js';
+import { useExigirSessao } from '../auth/useExigirSessao.js';
+import { Estrelas } from '../avaliacoes/Estrelas.jsx';
+import { ListaResenhas } from '../avaliacoes/ListaResenhas.jsx';
 import { Carregando, Erro, Vazio } from '../componentes/Estados.jsx';
 import { Poster } from '../componentes/Poster.jsx';
 import { AvisoCache } from './AvisoCache.jsx';
-import { useSerie } from './consultas.js';
+import { useEstadoSerie, useSerie } from './consultas.js';
 
 export function PaginaSerie() {
   const { tmdbId } = useParams();
   const { data: serie, isPending, isError, error, refetch } = useSerie(tmdbId);
+  const { sessao } = useAuth();
+  const estado = useEstadoSerie(tmdbId);
+  const exigirSessao = useExigirSessao();
+  const navigate = useNavigate();
+  const minhaAvaliacao = sessao ? estado.data?.avaliacao : null;
 
   if (isPending) return <Carregando />;
   // 400 = identificador malformado na URL; para quem digitou, é o mesmo que não existir.
@@ -50,6 +59,20 @@ export function PaginaSerie() {
               {serie.sinopse ?? 'Sem sinopse disponível.'}
             </p>
           </div>
+          <div className="flex flex-wrap items-center gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => exigirSessao() && navigate(`/series/${serie.tmdbId}/avaliacao`)}
+              className="min-h-10 rounded-md bg-destaque px-4 font-semibold text-fundo hover:brightness-110"
+            >
+              {minhaAvaliacao ? 'Editar avaliação' : 'Avaliar'}
+            </button>
+            {minhaAvaliacao && (
+              <span className="text-sm">
+                Sua nota: <Estrelas nota={minhaAvaliacao.nota} />
+              </span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -74,6 +97,15 @@ export function PaginaSerie() {
             ))}
           </ul>
         )}
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-xl font-semibold">Resenhas</h2>
+        <ListaResenhas
+          filtros={{ serieTmdbId: String(serie.tmdbId) }}
+          mostrarSerie={false}
+          vazio="Ninguém escreveu uma resenha desta série ainda."
+        />
       </section>
     </article>
   );
