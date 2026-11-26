@@ -8,6 +8,7 @@ import { criarRotasEstado } from './estado/rotas.js';
 import { criarRotasListas } from './listas/rotas.js';
 import { criarAuth } from './middleware/auth.js';
 import { criarRotasPerfis } from './perfis/rotas.js';
+import { criarRotasSocial } from './social/rotas.js';
 
 export function criarApp({ config, clientes, catalogo }) {
   const app = express();
@@ -26,6 +27,7 @@ export function criarApp({ config, clientes, catalogo }) {
   api.use(criarRotasEstado({ exigir }));
   api.use(criarRotasAvaliacoes({ exigir }));
   api.use(criarRotasListas({ exigir }));
+  api.use(criarRotasSocial({ exigir }));
 
   app.use('/api', api);
   app.use((req, res, next) =>

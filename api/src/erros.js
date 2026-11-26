@@ -39,11 +39,9 @@ export function tratadorDeErros(err, req, res, next) {
     return res.status(err.status).json({ erro: { codigo: err.codigo, mensagem: err.message } });
   }
   if (err?.type === 'entity.parse.failed') {
-    return res
-      .status(400)
-      .json({
-        erro: { codigo: 'json_invalido', mensagem: 'Corpo da requisição não é um JSON válido.' },
-      });
+    return res.status(400).json({
+      erro: { codigo: 'json_invalido', mensagem: 'Corpo da requisição não é um JSON válido.' },
+    });
   }
   console.error(err);
   return res
