@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
+import { useAuth } from '../auth/contexto.js';
+import { MenuConta } from './MenuConta.jsx';
 
 export function Cabecalho() {
   const [termo, setTermo] = useState('');
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { sessao } = useAuth();
+  const location = useLocation();
+  const { pathname } = location;
   const noInicio = pathname === '/';
 
   function buscar(evento) {
@@ -40,12 +44,20 @@ export function Cabecalho() {
           </form>
         )}
         <nav className="ml-auto" aria-label="Conta">
-          <Link
-            to="/entrar"
-            className="inline-flex min-h-10 items-center rounded-md px-3 hover:bg-fundo"
-          >
-            Entrar
-          </Link>
+          {sessao ? (
+            <MenuConta />
+          ) : (
+            <Link
+              to={
+                pathname === '/entrar'
+                  ? '/entrar'
+                  : `/entrar?voltar=${encodeURIComponent(pathname + location.search)}`
+              }
+              className="inline-flex min-h-10 items-center rounded-md px-3 hover:bg-fundo"
+            >
+              Entrar
+            </Link>
+          )}
         </nav>
       </div>
     </header>
