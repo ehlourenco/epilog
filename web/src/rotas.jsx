@@ -4,6 +4,7 @@ import { PaginaInicio } from './catalogo/PaginaInicio.jsx';
 import { PaginaSerie } from './catalogo/PaginaSerie.jsx';
 import { PaginaTemporada } from './catalogo/PaginaTemporada.jsx';
 import { PaginaEntrar } from './conta/PaginaEntrar.jsx';
+import { PaginaDiario } from './diario/PaginaDiario.jsx';
 import { PaginaMeuPerfil } from './conta/PaginaMeuPerfil.jsx';
 import { PaginaPerfilPublico } from './conta/PaginaPerfilPublico.jsx';
 import { Layout } from './layout/Layout.jsx';
@@ -23,6 +24,14 @@ export const roteador = createBrowserRouter([
         element: (
           <RotaProtegida>
             <PaginaMeuPerfil />
+          </RotaProtegida>
+        ),
+      },
+      {
+        path: 'me/diario',
+        element: (
+          <RotaProtegida>
+            <PaginaDiario />
           </RotaProtegida>
         ),
       },

@@ -1,4 +1,5 @@
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useAuth } from '../auth/contexto.js';
 import { api } from '../lib/api.js';
 
 export function useBusca(q) {
@@ -20,5 +21,15 @@ export function useTemporada(tmdbId, n) {
   return useQuery({
     queryKey: ['temporada', tmdbId, n],
     queryFn: () => api(`/series/${tmdbId}/temporadas/${n}`),
+  });
+}
+
+// Estado pessoal do usuário com a série (avaliação, Quero assistir, listas). Usado pelos PRs RF04 e RF05.
+export function useEstadoSerie(tmdbId) {
+  const { sessao } = useAuth();
+  return useQuery({
+    queryKey: ['estado-serie', tmdbId],
+    queryFn: () => api(`/me/series/${tmdbId}/estado`),
+    enabled: Boolean(sessao),
   });
 }
