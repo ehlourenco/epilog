@@ -27,7 +27,11 @@ export async function api(caminho, { metodo = 'GET', corpo } = {}) {
       body: corpo !== undefined ? JSON.stringify(corpo) : undefined,
     });
   } catch {
-    throw new ErroDaApi(0, 'sem_conexao', 'Não foi possível falar com o servidor. Verifique sua conexão.');
+    throw new ErroDaApi(
+      0,
+      'sem_conexao',
+      'Não foi possível falar com o servidor. Verifique sua conexão.',
+    );
   }
 
   if (resposta.status === 204) return null;

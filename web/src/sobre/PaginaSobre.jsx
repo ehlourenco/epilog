@@ -4,8 +4,8 @@ export function PaginaSobre() {
       <h1 className="text-3xl font-bold">Sobre o EpiLog</h1>
       <p>
         O EpiLog é uma aplicação Web para quem acompanha séries de televisão. Você pesquisa séries,
-        registra cada episódio assistido no seu diário, acompanha o progresso por temporada, dá notas
-        e escreve resenhas, organiza listas e acompanha as resenhas dos perfis que segue.
+        registra cada episódio assistido no seu diário, acompanha o progresso por temporada, dá
+        notas e escreve resenhas, organiza listas e acompanha as resenhas dos perfis que segue.
       </p>
       <section className="space-y-1">
         <h2 className="text-xl font-semibold">Projeto</h2>

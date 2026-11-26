@@ -12,7 +12,10 @@ export function Vazio({ mensagem }) {
 
 export function Erro({ erro, aoTentarDeNovo }) {
   return (
-    <div role="alert" className="my-6 rounded-md border border-perigo/40 bg-perigo/10 p-4 text-center">
+    <div
+      role="alert"
+      className="my-6 rounded-md border border-perigo/40 bg-perigo/10 p-4 text-center"
+    >
       <p>{erro?.message ?? 'Algo deu errado.'}</p>
       {aoTentarDeNovo && (
         <button
