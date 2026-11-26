@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node --env-file-if-exists=.env --watch src/server.js",
     "start": "node --env-file-if-exists=.env src/server.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "verificar:banco": "node --env-file=.env scripts/verificar-banco.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.119.2",
