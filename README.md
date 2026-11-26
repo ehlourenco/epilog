@@ -5,7 +5,7 @@ Diário e catálogo de séries de TV. Você pesquisa séries existentes, registr
 Trabalho final de Desenvolvimento Web (OTES-02) — UDESC, 2026/2.
 Autores: Nivea Maria Seger e Enzo Holtz Lourenço · Professora: Débora Cabral Nazário.
 
-- Projeto (resumo expandido), design e plano: [`docs/`](docs/)
+- Design, plano de implementação e estado atual: [`docs/`](docs/), em especial o [checkpoint da Etapa 1](docs/checkpoint-etapa-1.md)
 - Arquitetura: React + Vite → API REST Express → Supabase (PostgreSQL + Auth, com RLS) e TMDB
 
 ## Requisitos

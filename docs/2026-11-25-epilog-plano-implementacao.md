@@ -87,7 +87,7 @@ Organização por funcionalidade: cada PR da Etapa 2 cria a própria pasta e enc
 - [x] Em **Authentication → Sign In / Providers → Email**, desligar **Confirm email** (§5.7 do design).
 - [x] Em **Project Settings → API Keys**, copiar a URL do projeto, a **publishable key** (`sb_publishable_…`) e a **secret key** (`sb_secret_…`).
 - [x] Criar conta no TMDB e, em **Settings → API**, copiar o **API Read Access Token**.
-- [ ] Baixar o logo oficial do TMDB na página de logos e atribuição do TMDB e guardar para a Task 2 (`web/public/tmdb-logo.svg`).
+- [x] Baixar o logo oficial do TMDB na página de logos e atribuição do TMDB e guardar para a Task 2 (`web/public/tmdb-logo.svg`).
 
 ---
 
@@ -107,8 +107,8 @@ Organização por funcionalidade: cada PR da Etapa 2 cria a própria pasta e enc
   - `criarApp({ config, clientes, catalogo }) → express.Application`. Monta `express.json()`, `cors({ origin })` só se `corsOrigin`, um router em `/api` com `GET /saude → { ok: true }`, depois 404 `rota_nao_encontrada` e `tratadorDeErros`. As tasks seguintes acrescentam routers.
   - `test/ajudantes.js`: `criarAppDeTeste(sobrescritas = {}) → app`, com config, clientes e catálogo falsos.
 
-- [ ] **Passo 1: criar a estrutura.** `git init`. `package.json` raiz com `workspaces: ["api", "web"]`, `engines`, scripts `dev` (`concurrently -n api,web "npm run dev -w api" "npm run dev -w web"`), `test` (`npm test --workspaces --if-present`), `lint` e `format`. `.gitignore`: `node_modules`, `.env`, `dist`, `supabase/.temp`. `.prettierrc`: `{ "singleQuote": true, "printWidth": 100 }`. ESLint flat config: `@eslint/js` recommended; `globals.node` para `api/`; `globals.browser` + `react-hooks` + `react-refresh` para `web/`. `api/package.json` com `"type": "module"` e os scripts `dev` (`node --env-file-if-exists=.env --watch src/server.js`), `start` (o mesmo, sem `--watch`) e `test` (`vitest run`). Dependências: `express@5 @supabase/supabase-js zod cors`. Dev: `vitest supertest`. `api/.env.example` com as variáveis do §5.2 do design.
-- [ ] **Passo 2: escrever os testes que falham.**
+- [x] **Passo 1: criar a estrutura.** `git init`. `package.json` raiz com `workspaces: ["api", "web"]`, `engines`, scripts `dev` (`concurrently -n api,web "npm run dev -w api" "npm run dev -w web"`), `test` (`npm test --workspaces --if-present`), `lint` e `format`. `.gitignore`: `node_modules`, `.env`, `dist`, `supabase/.temp`. `.prettierrc`: `{ "singleQuote": true, "printWidth": 100 }`. ESLint flat config: `@eslint/js` recommended; `globals.node` para `api/`; `globals.browser` + `react-hooks` + `react-refresh` para `web/`. `api/package.json` com `"type": "module"` e os scripts `dev` (`node --env-file-if-exists=.env --watch src/server.js`), `start` (o mesmo, sem `--watch`) e `test` (`vitest run`). Dependências: `express@5 @supabase/supabase-js zod cors`. Dev: `vitest supertest`. `api/.env.example` com as variáveis do §5.2 do design.
+- [x] **Passo 2: escrever os testes que falham.**
 
 ```js
 // api/test/config.test.js
@@ -146,10 +146,10 @@ test('JSON malformado', async () => {
 });
 ```
 
-- [ ] **Passo 3:** `npm install && npm test -w api`. Esperado: FALHA (módulos não existem).
-- [ ] **Passo 4: implementar** `config.js`, `erros.js`, `app.js` e `test/ajudantes.js`. `server.js` faz `carregarConfig(process.env)`, chama `criarApp(...).listen(config.port)` e loga a URL. Os clientes e o catálogo entram nas Tasks 4b e 6.
-- [ ] **Passo 5:** `npm test -w api`. Esperado: todos PASSAM.
-- [ ] **Passo 6: commit.** `git add -A && git commit -m "chore: monorepo e esqueleto da API"`
+- [x] **Passo 3:** `npm install && npm test -w api`. Esperado: FALHA (módulos não existem).
+- [x] **Passo 4: implementar** `config.js`, `erros.js`, `app.js` e `test/ajudantes.js`. `server.js` faz `carregarConfig(process.env)`, chama `criarApp(...).listen(config.port)` e loga a URL. Os clientes e o catálogo entram nas Tasks 4b e 6.
+- [x] **Passo 5:** `npm test -w api`. Esperado: todos PASSAM.
+- [x] **Passo 6: commit.** `git add -A && git commit -m "chore: monorepo e esqueleto da API"`
 
 ### Task 2: Esqueleto do front, layout, Sobre e utilitários de data e redirecionamento
 
@@ -167,8 +167,8 @@ test('JSON malformado', async () => {
   - `<Carregando />`, `<Vazio mensagem />` e `<Erro erro aoTentarDeNovo />`, este último com o botão "Tentar de novo".
   - Tokens Tailwind em `@theme`: `--color-fundo`, `--color-superficie`, `--color-borda`, `--color-texto`, `--color-texto-suave`, `--color-destaque`, `--color-perigo`. Tema escuro; a paleta exata fica com quem constrói.
 
-- [ ] **Passo 1: configurar.** Dependências: `react-router @tanstack/react-query @supabase/supabase-js`. Dev: `tailwindcss @tailwindcss/vite vitest`. `vite.config.js`: plugins `react()` e `tailwindcss()`; `server.proxy: { '/api': 'http://localhost:3333' }`; `test: { env: { TZ: 'America/Sao_Paulo' } }`. Script `"test": "vitest run"`.
-- [ ] **Passo 2: escrever os testes que falham.**
+- [x] **Passo 1: configurar.** Dependências: `react-router @tanstack/react-query @supabase/supabase-js`. Dev: `tailwindcss @tailwindcss/vite vitest`. `vite.config.js`: plugins `react()` e `tailwindcss()`; `server.proxy: { '/api': 'http://localhost:3333' }`; `test: { env: { TZ: 'America/Sao_Paulo' } }`. Script `"test": "vitest run"`.
+- [x] **Passo 2: escrever os testes que falham.**
 
 ```js
 // web/src/test/datas.test.js
@@ -185,10 +185,10 @@ test.each([
 ])('caminhoSeguro(%s)', (entrada, esperado) => expect(caminhoSeguro(entrada)).toBe(esperado));
 ```
 
-- [ ] **Passo 3:** `npm test -w web`. Esperado: FALHA.
-- [ ] **Passo 4: implementar** `datas.js` e `voltar.js`. Depois `main.jsx`, com `QueryClientProvider` (queries com `staleTime: 60_000` e `retry: (n, e) => (e?.status ?? 500) >= 500 && n < 1`) e `RouterProvider`. Em seguida, `rotas.jsx` com `createBrowserRouter`: o `Layout` envolve `index` (placeholder até a Task 5), `sobre` e `*` (página não encontrada). O `Cabecalho` tem o link "EpiLog" para `/`, um campo de busca que navega para `/?q=` e o link "Entrar". O `Rodape` tem uma atribuição curta ao TMDB e o link para `/sobre`. A `PaginaSobre` traz: descrição do projeto; autores (Nivea Maria Seger e Enzo Holtz Lourenço); prof.ª Débora Cabral Nazário; OTES-02 UDESC 2026/2; logo do TMDB e o aviso exato das restrições globais. Por fim, `lib/supabase.js` e `lib/api.js`.
-- [ ] **Passo 5:** `npm test -w web`. Esperado: PASSA. Depois `npm run dev`: `http://localhost:5173` mostra o layout escuro e `/sobre` mostra os créditos; em 360 px de largura não há rolagem horizontal.
-- [ ] **Passo 6: commit.** `git add -A && git commit -m "feat(web): esqueleto, layout e página Sobre"`
+- [x] **Passo 3:** `npm test -w web`. Esperado: FALHA.
+- [x] **Passo 4: implementar** `datas.js` e `voltar.js`. Depois `main.jsx`, com `QueryClientProvider` (queries com `staleTime: 60_000` e `retry: (n, e) => (e?.status ?? 500) >= 500 && n < 1`) e `RouterProvider`. Em seguida, `rotas.jsx` com `createBrowserRouter`: o `Layout` envolve `index` (placeholder até a Task 5), `sobre` e `*` (página não encontrada). O `Cabecalho` tem o link "EpiLog" para `/`, um campo de busca que navega para `/?q=` e o link "Entrar". O `Rodape` tem uma atribuição curta ao TMDB e o link para `/sobre`. A `PaginaSobre` traz: descrição do projeto; autores (Nivea Maria Seger e Enzo Holtz Lourenço); prof.ª Débora Cabral Nazário; OTES-02 UDESC 2026/2; logo do TMDB e o aviso exato das restrições globais. Por fim, `lib/supabase.js` e `lib/api.js`.
+- [x] **Passo 5:** `npm test -w web`. Esperado: PASSA. Depois `npm run dev`: `http://localhost:5173` mostra o layout escuro e `/sobre` mostra os créditos; em 360 px de largura não há rolagem horizontal.
+- [x] **Passo 6: commit.** `git add -A && git commit -m "feat(web): esqueleto, layout e página Sobre"`
 
 ### Task 3: Banco completo (esquema, RLS e funções) e script de verificação
 
@@ -203,7 +203,7 @@ test.each([
   - `listar_resenhas(p_serie_tmdb_id int default null, p_autor_apelido text default null, p_so_seguidos boolean default false, p_antes_publicado timestamptz default null, p_antes_id bigint default null, p_limite int default 20) returns table (id bigint, nota numeric, texto text, contem_spoiler boolean, publicado_em timestamptz, autor_apelido text, serie_tmdb_id int, serie_nome text, poster_path text, curtidas bigint, curti boolean)`. Sempre filtra `texto is not null`. Com `p_so_seguidos`, só autores que `auth.uid()` segue. Cursor `(publicado_em, id) < (p_antes_publicado, p_antes_id)`. Ordem `publicado_em desc, id desc`. `curti` = existe curtida de `auth.uid()`, falso para anônimo.
   - Usada por RF04 (série e perfil) e por RF06 (feed).
 
-- [ ] **Passo 1: escrever `…000001_esquema.sql`.** Restrições além das colunas do design:
+- [x] **Passo 1: escrever `…000001_esquema.sql`.** Restrições além das colunas do design:
   - `serie.tmdb_id` único e não nulo; `idioma_sinopse in ('pt','en')`.
   - `temporada.numero >= 0`.
   - `perfil.apelido` único, com `apelido ~ '^[a-z0-9_]{3,20}$'`.
@@ -213,7 +213,7 @@ test.each([
   - `seguidor`: `check (seguidor_id <> seguido_id)`.
   - PKs compostas em `item_lista`, `seguidor` e `curtida`.
   - Índices: `diario (perfil_id, assistido_em desc, id desc)` e `avaliacao (publicado_em desc, id desc) where texto is not null`.
-- [ ] **Passo 2: escrever `…000002_rls.sql`.** `enable row level security` nas 10 tabelas. Usar `(select auth.uid())` nas policies, como o Supabase recomenda.
+- [x] **Passo 2: escrever `…000002_rls.sql`.** `enable row level security` nas 10 tabelas. Usar `(select auth.uid())` nas policies, como o Supabase recomenda.
   - **Grants explícitos no começo do arquivo,** para não depender da opção "Grant API access to new tables automatically" do painel:
     - `grant usage on schema public to anon, authenticated`
     - `grant select on <as 10 tabelas> to anon, authenticated`
@@ -234,13 +234,13 @@ test.each([
 | seguidor | `select` para todos; `insert` com check `seguidor_id = uid`; `delete` com using `seguidor_id = uid` |
 | curtida | `select` para todos; `insert` com check `perfil_id = uid`; `delete` com using `perfil_id = uid` |
 
-- [ ] **Passo 3: escrever `…000003_funcoes.sql`.**
+- [x] **Passo 3: escrever `…000003_funcoes.sql`.**
   - `public.criar_perfil_novo_usuario()`: `security definer`, `set search_path = ''`. Insere `perfil (id, lower(raw_user_meta_data->>'apelido'))` e `lista ('Quero assistir', 'quero_assistir', 'privada')`. Trigger `after insert on auth.users`.
   - `public.controlar_publicacao_avaliacao()`: trigger `before insert or update on avaliacao`. No insert: `publicado_em := case when texto is not null then now() end`. No update: `publicado_em := coalesce(old.publicado_em, case when new.texto is not null then now() end)` e `atualizado_em := now()`. O cliente nunca define `publicado_em`.
   - `meu_progresso` e `listar_resenhas`, como nas Interfaces, com `language sql stable security invoker`.
   - No fim do arquivo: `grant execute on function meu_progresso(bigint), listar_resenhas(int, text, boolean, timestamptz, bigint, int) to anon, authenticated`.
-- [ ] **Passo 4: aplicar (⛔ com OK do Enzo).** `npx supabase login && npx supabase link --project-ref <ref> && npx supabase db push`. Esperado: as 3 migrações aplicadas. Alternativa: colar os 3 arquivos, em ordem, no SQL Editor do painel.
-- [ ] **Passo 5: escrever `api/scripts/verificar-banco.js`.** Usa `node:assert` e supabase-js; imprime `✔ <nome>` por checagem e sai com código 1 na primeira falha. Preparação: com o cliente admin, cria os usuários `qa_a` e `qa_b` (`qa-a@example.com`/`qa-b@example.com`, `email_confirm: true`, `user_metadata.apelido`) e uma série de teste `tmdb_id = -9999` com uma temporada de 8 episódios. Cada usuário faz login num cliente anônimo próprio (`signInWithPassword`). No `finally`, apaga os dois usuários e a série -9999 (o cascade limpa o resto). Checagens:
+- [x] **Passo 4: aplicar (⛔ com OK do Enzo).** `npx supabase login && npx supabase link --project-ref <ref> && npx supabase db push`. Esperado: as 3 migrações aplicadas. Alternativa: colar os 3 arquivos, em ordem, no SQL Editor do painel.
+- [x] **Passo 5: escrever `api/scripts/verificar-banco.js`.** Usa `node:assert` e supabase-js; imprime `✔ <nome>` por checagem e sai com código 1 na primeira falha. Preparação: com o cliente admin, cria os usuários `qa_a` e `qa_b` (`qa-a@example.com`/`qa-b@example.com`, `email_confirm: true`, `user_metadata.apelido`) e uma série de teste `tmdb_id = -9999` com uma temporada de 8 episódios. Cada usuário faz login num cliente anônimo próprio (`signInWithPassword`). No `finally`, apaga os dois usuários e a série -9999 (o cascade limpa o resto). Checagens:
   1. O cadastro criou `perfil.apelido = 'qa_a'` e uma lista `quero_assistir` privada.
   2. Anônimo lê `serie`; anônimo **não** insere em `serie`.
   3. A cria uma entrada no diário; B e anônimo leem **0** linhas do diário de A.
@@ -254,8 +254,8 @@ test.each([
   11. Item repetido na mesma lista → `23505`; B inserir item na lista de A → erro.
   12. A seguir A → `23514`; A segue B; repetir → `23505`.
   13. B avalia com texto e com nota sem texto; `listar_resenhas(p_so_seguidos => true)` como A traz só a com texto.
-- [ ] **Passo 6:** `npm run verificar:banco -w api`. Esperado: 13 `✔` e código de saída 0.
-- [ ] **Passo 7: commit.** `git add -A && git commit -m "feat(banco): esquema, RLS, funções e verificação"`
+- [x] **Passo 6:** `npm run verificar:banco -w api`. Esperado: 13 `✔` e código de saída 0.
+- [x] **Passo 7: commit.** `git add -A && git commit -m "feat(banco): esquema, RLS, funções e verificação"`
 
 ### Task 4a: Cliente e mapeadores do TMDB
 
@@ -271,7 +271,7 @@ test.each([
   - `mapearTemporada(pt, en = null) → { numero, nome, episodios: [{ numero, nome, descricao }] }`.
   - `ordenarTemporadas(lista) → lista`: crescente, com a temporada 0 por último.
 
-- [ ] **Passo 1: escrever os testes que falham.**
+- [x] **Passo 1: escrever os testes que falham.**
 
 ```js
 // tmdb-cliente.test.js — fetch falso que registra as chamadas
@@ -314,10 +314,10 @@ test('episódio usa descrição en quando pt vazia', () => expect(mapearTemporad
   { numero: 1, nome: 'Piloto', descricao: 'pt' }, { numero: 2, nome: null, descricao: 'en' }]));
 ```
 
-- [ ] **Passo 2:** `npm test -w api`. Esperado: FALHA.
-- [ ] **Passo 3: implementar** os dois módulos com as assinaturas das Interfaces (querystring via `URLSearchParams`).
-- [ ] **Passo 4:** `npm test -w api`. Esperado: PASSA.
-- [ ] **Passo 5: commit.** `git add -A && git commit -m "feat(api): cliente e mapeadores do TMDB"`
+- [x] **Passo 2:** `npm test -w api`. Esperado: FALHA.
+- [x] **Passo 3: implementar** os dois módulos com as assinaturas das Interfaces (querystring via `URLSearchParams`).
+- [x] **Passo 4:** `npm test -w api`. Esperado: PASSA.
+- [x] **Passo 5: commit.** `git add -A && git commit -m "feat(api): cliente e mapeadores do TMDB"`
 
 ### Task 4b: Serviço de catálogo com cache no banco e rotas públicas (RF01)
 
@@ -347,7 +347,7 @@ Algoritmo de `obterSerie` (`obterTemporada` é análogo, usando `episodiosAtuali
 3. Se o TMDB lançar 502 e houver `linha`, devolve a linha com `origem: 'cache_vencido'`. Qualquer outro erro (inclusive 404) é relançado.
 4. Na temporada, a chamada `en-US` só acontece se algum episódio vier sem `overview`.
 
-- [ ] **Passo 1: escrever os testes de serviço que falham.** Use um `repositorio` falso, com `vi.fn`, e um `tmdb` falso. `agora` fixo em `2026-11-26T12:00:00Z` e `cacheHoras: 24`.
+- [x] **Passo 1: escrever os testes de serviço que falham.** Use um `repositorio` falso, com `vi.fn`, e um `tmdb` falso. `agora` fixo em `2026-11-26T12:00:00Z` e `cacheHoras: 24`.
 
 ```js
 test('sem cache: consulta TMDB, salva, origem tmdb');            // tmdb.serie chamado 1×, repositorio.salvarSerie chamado
@@ -362,7 +362,7 @@ test('temporada de série ausente no banco: obtém a série antes (FK)');
 test('temporada devolve episódios com os ids que o repositório retornou');
 ```
 
-- [ ] **Passo 2: escrever os testes de rota que falham** (supertest, com `catalogo` falso via `criarAppDeTeste({ catalogo })`).
+- [x] **Passo 2: escrever os testes de rota que falham** (supertest, com `catalogo` falso via `criarAppDeTeste({ catalogo })`).
 
 ```js
 // beforeEach: catalogo = { buscar: vi.fn().mockResolvedValue({ pagina: 1, totalPaginas: 1, resultados: [] }),
@@ -381,15 +381,15 @@ test('série inexistente → 404 com código', async () => {
 });
 ```
 
-- [ ] **Passo 3:** `npm test -w api`. Esperado: FALHA.
-- [ ] **Passo 4: implementar** `supabase.js`, `repositorio.js`, `servico.js`, `rotas.js`; montar em `app.js`; compor em `server.js`.
-- [ ] **Passo 5:** `npm test -w api`. Esperado: PASSA.
-- [ ] **Passo 6: verificar contra os serviços reais.** Criar `api/.env` e rodar `npm run dev -w api`. Depois:
+- [x] **Passo 3:** `npm test -w api`. Esperado: FALHA.
+- [x] **Passo 4: implementar** `supabase.js`, `repositorio.js`, `servico.js`, `rotas.js`; montar em `app.js`; compor em `server.js`.
+- [x] **Passo 5:** `npm test -w api`. Esperado: PASSA.
+- [x] **Passo 6: verificar contra os serviços reais.** Criar `api/.env` e rodar `npm run dev -w api`. Depois:
   - `curl -s 'localhost:3333/api/series/busca?q=breaking'` → resultados com `posterUrl`.
   - `curl -s localhost:3333/api/series/1396` duas vezes → `origem: "tmdb"` e depois `"cache"`.
   - `curl -s localhost:3333/api/series/1396/temporadas/1` → episódios com `id`.
   - `curl -si localhost:3333/api/series/999999999` → `404`.
-- [ ] **Passo 7: commit.** `git add -A && git commit -m "feat(api): catálogo com cache no banco (RF01)"`
+- [x] **Passo 7: commit.** `git add -A && git commit -m "feat(api): catálogo com cache no banco (RF01)"`
 
 ### Task 5: Telas do catálogo (RF01)
 
@@ -406,16 +406,16 @@ test('série inexistente → 404 com código', async () => {
   - `<AvisoCache origem />`: só renderiza quando `origem === 'cache_vencido'`, com o texto "Não foi possível atualizar com o TMDB; mostrando dados salvos."
   - Rotas `/`, `/series/:tmdbId` e `/series/:tmdbId/temporadas/:n`.
 
-- [ ] **Passo 1: `PaginaInicio`.** Campo de busca sincronizado com `?q=` (dispara no Enter ou após 300 ms de debounce) e grade de `CartaoSerie` (pôster, nome, ano) com link para `/series/:tmdbId`. Paginação "Carregar mais" quando `pagina < totalPaginas`. Estados: vazio antes de buscar ("Busque uma série pelo título"), sem resultados, carregando e erro.
-- [ ] **Passo 2: `PaginaSerie`.** Pôster, nome, ano e gêneros. A sinopse ganha o selo "Sinopse em inglês" quando `idiomaSinopse === 'en'`, e mostra "Sem sinopse disponível" quando é nula. `AvisoCache` e lista de temporadas (nome e "N episódios") com link para a temporada. Erro 404 → "Série não encontrada".
-- [ ] **Passo 3: `PaginaTemporada`.** Cabeçalho com o link de volta para a série, o nome da série e o da temporada. Lista de episódios: número, nome ou "Episódio N", descrição ou "Sem descrição". As ações pessoais entram na Task 9.
-- [ ] **Passo 4: verificar** com `npm run dev`, nesta ordem:
+- [x] **Passo 1: `PaginaInicio`.** Campo de busca sincronizado com `?q=` (dispara no Enter ou após 300 ms de debounce) e grade de `CartaoSerie` (pôster, nome, ano) com link para `/series/:tmdbId`. Paginação "Carregar mais" quando `pagina < totalPaginas`. Estados: vazio antes de buscar ("Busque uma série pelo título"), sem resultados, carregando e erro.
+- [x] **Passo 2: `PaginaSerie`.** Pôster, nome, ano e gêneros. A sinopse ganha o selo "Sinopse em inglês" quando `idiomaSinopse === 'en'`, e mostra "Sem sinopse disponível" quando é nula. `AvisoCache` e lista de temporadas (nome e "N episódios") com link para a temporada. Erro 404 → "Série não encontrada".
+- [x] **Passo 3: `PaginaTemporada`.** Cabeçalho com o link de volta para a série, o nome da série e o da temporada. Lista de episódios: número, nome ou "Episódio N", descrição ou "Sem descrição". As ações pessoais entram na Task 9.
+- [x] **Passo 4: verificar** com `npm run dev`, nesta ordem:
   - Buscar "breaking" e chegar a Breaking Bad, depois a uma temporada com episódios.
   - Uma série com Especiais mostra essa temporada por último.
   - `/series/999999999` → "Série não encontrada".
   - Com `TMDB_READ_TOKEN` inválido no `.env`, a série já visitada aparece com o aviso de cache, e uma busca mostra o estado de erro.
   - Em 360 px de largura, não há rolagem horizontal.
-- [ ] **Passo 5: commit.** `git add -A && git commit -m "feat(web): busca, série e temporada (RF01)"`
+- [x] **Passo 5: commit.** `git add -A && git commit -m "feat(web): busca, série e temporada (RF01)"`
 
 ### Task 6: Autenticação na API e rotas de perfil (RF02)
 
@@ -446,7 +446,7 @@ test('série inexistente → 404 com código', async () => {
     - `db` (padrão `criarDbFalso({})`) é devolvido por `clientes.doUsuario()` e também serve de `clientes.anonimo`, junto com um `auth.getUser` falso.
     - Esse `auth.getUser` falso aceita o token `'bom'` como o usuário `'u1'` e recusa qualquer outro.
 
-- [ ] **Passo 1: escrever os testes que falham.**
+- [x] **Passo 1: escrever os testes que falham.**
 
 ```js
 // esquemas.test.js
@@ -474,10 +474,10 @@ test('disponível com apelido inválido → 400', async () =>
   expect((await request(criarAppDeTeste()).get('/api/perfis/disponivel?apelido=a b')).status).toBe(400));
 ```
 
-- [ ] **Passo 2:** `npm test -w api`. Esperado: FALHA.
-- [ ] **Passo 3: implementar** `auth.js`, `esquemas.js` e `rotas.js` (usam `req.db`). Em `GET /perfis/:apelido`, as contagens vêm de `seguidor` com `count: 'exact', head: true`. Depois, montar tudo em `app.js`.
-- [ ] **Passo 4:** `npm test -w api`. Esperado: PASSA.
-- [ ] **Passo 5: commit.** `git add -A && git commit -m "feat(api): autenticação e perfis (RF02)"`
+- [x] **Passo 2:** `npm test -w api`. Esperado: FALHA.
+- [x] **Passo 3: implementar** `auth.js`, `esquemas.js` e `rotas.js` (usam `req.db`). Em `GET /perfis/:apelido`, as contagens vêm de `seguidor` com `count: 'exact', head: true`. Depois, montar tudo em `app.js`.
+- [x] **Passo 4:** `npm test -w api`. Esperado: PASSA.
+- [x] **Passo 5: commit.** `git add -A && git commit -m "feat(api): autenticação e perfis (RF02)"`
 
 ### Task 7: Conta no front (RF02)
 
@@ -497,19 +497,19 @@ test('disponível com apelido inválido → 400', async () =>
   - Rotas: `/entrar`, `/me` (protegida) e `/u/:apelido`.
   - `MenuConta`: Diário (`/me/diario`), Perfil (`/me`) e Sair. Os PRs da Etapa 2 acrescentam Minhas listas e Atividade.
 
-- [ ] **Passo 1: `AuthProvider`, `useExigirSessao`, `RotaProtegida`, `MenuConta`.** O `Cabecalho` mostra `MenuConta` (com o apelido) quando há sessão, ou "Entrar" quando não há.
-- [ ] **Passo 2: `PaginaEntrar`.** Duas abas, Entrar e Criar conta, controladas por `?aba=criar`.
+- [x] **Passo 1: `AuthProvider`, `useExigirSessao`, `RotaProtegida`, `MenuConta`.** O `Cabecalho` mostra `MenuConta` (com o apelido) quando há sessão, ou "Entrar" quando não há.
+- [x] **Passo 2: `PaginaEntrar`.** Duas abas, Entrar e Criar conta, controladas por `?aba=criar`.
   - Criar conta: apelido (consulta `/perfis/disponivel` ao sair do campo e mostra a regra do schema), e-mail e senha (mínimo de 6 caracteres). Chama `supabase.auth.signUp({ email, password, options: { data: { apelido } } })`.
   - Mensagens em português: "Invalid login credentials" → "E-mail ou senha incorretos"; "User already registered" → "Já existe conta com esse e-mail".
   - Depois de entrar: `navigate(caminhoSeguro(params.get('voltar')), { replace: true })`.
-- [ ] **Passo 3: `PaginaMeuPerfil`** (apelido editável, com a mensagem do 409; e-mail da sessão; link "Ver meu perfil público"; botão Sair) e **`PaginaPerfilPublico`** (apelido, seguidores, seguindo, "Este é você" quando `souEu`; 404 → "Perfil não encontrado").
-- [ ] **Passo 4: verificar.**
+- [x] **Passo 3: `PaginaMeuPerfil`** (apelido editável, com a mensagem do 409; e-mail da sessão; link "Ver meu perfil público"; botão Sair) e **`PaginaPerfilPublico`** (apelido, seguidores, seguindo, "Este é você" quando `souEu`; 404 → "Perfil não encontrado").
+- [x] **Passo 4: verificar.**
   - Criar a conta `teste_enzo`, sair, entrar de novo.
   - `/me` sem sessão leva a `/entrar?voltar=%2Fme` e volta para `/me` depois de entrar.
   - `/entrar?voltar=https://exemplo.com` vai para `/` depois de entrar.
   - Trocar o apelido para um já usado → mensagem de "em uso".
   - `/u/teste_enzo` abre numa aba anônima.
-- [ ] **Passo 5: commit.** `git add -A && git commit -m "feat(web): cadastro, login e perfis (RF02)"`
+- [x] **Passo 5: commit.** `git add -A && git commit -m "feat(web): cadastro, login e perfis (RF02)"`
 
 ### Task 8: Diário, progresso e estado pessoal da série na API (RF03)
 
@@ -534,7 +534,7 @@ test('disponível com apelido inválido → 400', async () =>
     - `GET /me/progresso` → `[{ serieTmdbId, serieNome, posterUrl, temporadaNumero, assistidos, total, ultimoAssistido }]`.
   - `criarRotasEstado({ exigir }) → Router`: `GET /me/series/:tmdbId/estado` → `{ avaliacao: { id, nota, texto, contemSpoiler, publicadoEm } | null, queroAssistir: { listaId, contem }, listas: [{ id, titulo, contem }] }` (`listas` = as personalizadas do usuário). É o formato do §5.5 do design, detalhado para já servir ao botão e ao seletor de listas. Quem consome são os PRs RF04 e RF05; essa rota existe já agora para os dois não disputarem o mesmo arquivo.
 
-- [ ] **Passo 1: escrever os testes que falham.**
+- [x] **Passo 1: escrever os testes que falham.**
 
 ```js
 // paginacao.test.js
@@ -563,10 +563,10 @@ test('?antes=lixo → 400 cursor_invalido', async () => {
 });
 ```
 
-- [ ] **Passo 2:** `npm test -w api`. Esperado: FALHA.
-- [ ] **Passo 3: implementar.** O cursor do diário em PostgREST é `.or('assistido_em.lt.${chave},and(assistido_em.eq.${chave},id.lt.${id})')`. O progresso vem de `req.db.rpc('meu_progresso', { p_temporada_id })`. Montar os dois routers em `app.js`.
-- [ ] **Passo 4:** `npm test -w api`. Esperado: PASSA.
-- [ ] **Passo 5: commit.** `git add -A && git commit -m "feat(api): diário, progresso e estado da série (RF03)"`
+- [x] **Passo 2:** `npm test -w api`. Esperado: FALHA.
+- [x] **Passo 3: implementar.** O cursor do diário em PostgREST é `.or('assistido_em.lt.${chave},and(assistido_em.eq.${chave},id.lt.${id})')`. O progresso vem de `req.db.rpc('meu_progresso', { p_temporada_id })`. Montar os dois routers em `app.js`.
+- [x] **Passo 4:** `npm test -w api`. Esperado: PASSA.
+- [x] **Passo 5: commit.** `git add -A && git commit -m "feat(api): diário, progresso e estado da série (RF03)"`
 
 ### Task 9: Diário no front (RF03)
 
@@ -582,25 +582,25 @@ test('?antes=lixo → 400 cursor_invalido', async () => {
   - `<BarraProgresso assistidos total />`: texto "X de Y episódios", `role="progressbar"` com `aria-valuenow`, `aria-valuemin` e `aria-valuemax`. Com `total === 0`, mostra "Sem episódios" (nada de `NaN`).
   - Rota `/me/diario` (protegida).
 
-- [ ] **Passo 1: `PaginaTemporada`.**
+- [x] **Passo 1: `PaginaTemporada`.**
   - Logado: mostra `BarraProgresso` no topo e, em cada episódio, "visto N×" com o `RegistrosEpisodio` (data formatada, selo "Reassistida", editar data e revisita, excluir com confirmação).
   - Botão "Registrar": chama `exigirSessao()` e abre o `FormularioVisualizacao`. A data vem com `hojeLocal()` e `max=hojeLocal()`; a caixa "Reassistida" vem marcada quando N > 0.
   - Todo botão de mutação fica `disabled` enquanto `isPending`.
-- [ ] **Passo 2: `PaginaDiario`.** Seção "Em andamento", com um cartão por temporada de `useProgresso` (pôster, série, temporada e barra, com link para a temporada). Seção "Registros" com `useDiario` e "Carregar mais": data, `T{n}E{m}`, nome do episódio, série e selo de reassistida, com editar e excluir. Cada seção tem seu estado vazio.
-- [ ] **Passo 3: verificar, com o exemplo do resumo.**
+- [x] **Passo 2: `PaginaDiario`.** Seção "Em andamento", com um cartão por temporada de `useProgresso` (pôster, série, temporada e barra, com link para a temporada). Seção "Registros" com `useDiario` e "Carregar mais": data, `T{n}E{m}`, nome do episódio, série e selo de reassistida, com editar e excluir. Cada seção tem seu estado vazio.
+- [x] **Passo 3: verificar, com o exemplo do resumo.**
   - Numa temporada de 8 episódios, registrar o E01 duas vezes: a temporada mostra "visto 2×" e "1 de 8 episódios", e o segundo registro já veio com "Reassistida" marcada.
   - O diário mostra as duas entradas.
   - Excluir uma entrada mantém "1 de 8"; excluir a outra zera e tira a temporada de "Em andamento".
   - Deslogado, "Registrar" leva a `/entrar` e volta para a mesma temporada.
   - Às 23h (pode simular mudando o relógio do sistema), a data padrão continua sendo hoje.
-- [ ] **Passo 4: commit.** `git add -A && git commit -m "feat(web): diário e progresso (RF03)"`
+- [x] **Passo 4: commit.** `git add -A && git commit -m "feat(web): diário e progresso (RF03)"`
 
 ### Task 10: README, roteiro de verificação e GitHub
 
 **Arquivos:**
 - Criar: `README.md`, `docs/roteiro-verificacao.md`
 
-- [ ] **Passo 1: `README.md`.** Seções:
+- [x] **Passo 1: `README.md`.** Seções:
   - O que é (um parágrafo do resumo).
   - Requisitos (Node ≥ 24, as chaves do Supabase e do TMDB, que o Enzo passa em privado).
   - Configurar (copiar os dois `.env.example`).
@@ -611,10 +611,10 @@ test('?antes=lixo → 400 cursor_invalido', async () => {
   - **Como adicionar uma funcionalidade:** seguir o diário como modelo: `api/src/diario/esquemas.js` → `rotas.js` → montar em `app.js` → `web/src/diario/consultas.js` → página → `rotas.jsx`. Nenhum PR mexe em migração sem combinar.
   - Fluxo de PR: branch `feat/<rf>-<nome>` a partir de `main`, PR para `main`, revisão da outra pessoa.
   - Créditos TMDB.
-- [ ] **Passo 2: `docs/roteiro-verificacao.md`.** Junta, para repetir antes da apresentação, as verificações manuais das Tasks 5, 7 e 9 e o `verificar:banco`.
-- [ ] **Passo 3: testar do zero.** Clonar o repositório para uma pasta temporária (`git clone . <tmp>/epilog-clone`) e rodar lá `npm ci && npm test`. Esperado: todos os testes passam num clone limpo (sem `.env`).
-- [ ] **Passo 4: commit.** `git add -A && git commit -m "docs: README e roteiro de verificação"`
-- [ ] **Passo 5: publicar (⛔ só com OK do Enzo, que decide nome e visibilidade).** `gh repo create <nome> --source . --push --<public|private>`. Depois, adicionar a Nivea como colaboradora (`gh api` ou pelo painel). Mostrar o app para ela.
+- [x] **Passo 2: `docs/roteiro-verificacao.md`.** Junta, para repetir antes da apresentação, as verificações manuais das Tasks 5, 7 e 9 e o `verificar:banco`.
+- [x] **Passo 3: testar do zero.** Clonar o repositório para uma pasta temporária (`git clone . <tmp>/epilog-clone`) e rodar lá `npm ci && npm test`. Esperado: todos os testes passam num clone limpo (sem `.env`).
+- [x] **Passo 4: commit.** `git add -A && git commit -m "docs: README e roteiro de verificação"`
+- [ ] **Passo 5: publicar (⛔ só com OK do Enzo, que decide nome e visibilidade).** _(25/11: repositório público `ehlourenco/epilog` criado; push feito pelo Enzo; colaboradora Nivea pendente)_ `gh repo create <nome> --source . --push --<public|private>`. Depois, adicionar a Nivea como colaboradora (`gh api` ou pelo painel). Mostrar o app para ela.
 
 ---
 
