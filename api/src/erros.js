@@ -13,9 +13,9 @@ export class ErroApi extends Error {
 export function traduzirErroBanco(erro, mapa = {}) {
   switch (erro?.code) {
     case '23505':
-      return new ErroApi(409, mapa.conflito ?? 'conflito', 'Registro já existe.');
+      return new ErroApi(409, mapa.conflito ?? 'conflito', mapa.mensagem ?? 'Registro já existe.');
     case '23503':
-      return new ErroApi(404, mapa.referencia ?? 'referencia_inexistente', 'Referência não encontrada.');
+      return new ErroApi(404, mapa.referencia ?? 'referencia_inexistente', mapa.mensagem ?? 'Referência não encontrada.');
     case '23514':
       return new ErroApi(400, 'validacao', 'Dados fora das regras permitidas.');
     case '42501':
