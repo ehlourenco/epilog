@@ -12,6 +12,7 @@ import { Layout } from './layout/Layout.jsx';
 import { PaginaLista } from './listas/PaginaLista.jsx';
 import { PaginaMinhasListas } from './listas/PaginaMinhasListas.jsx';
 import { PaginaNaoEncontrada } from './PaginaNaoEncontrada.jsx';
+import { PaginaFeed } from './social/PaginaFeed.jsx';
 import { PaginaSobre } from './sobre/PaginaSobre.jsx';
 
 export const roteador = createBrowserRouter([
@@ -55,6 +56,14 @@ export const roteador = createBrowserRouter([
         ),
       },
       { path: 'listas/:id', element: <PaginaLista /> },
+      {
+        path: 'feed',
+        element: (
+          <RotaProtegida>
+            <PaginaFeed />
+          </RotaProtegida>
+        ),
+      },
       { path: 'u/:apelido', element: <PaginaPerfilPublico /> },
       { path: 'sobre', element: <PaginaSobre /> },
       { path: '*', element: <PaginaNaoEncontrada /> },

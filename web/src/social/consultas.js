@@ -25,3 +25,29 @@ export function useSeguir(apelido) {
     onSettled: () => queryClient.invalidateQueries({ queryKey: chave }),
   });
 }
+
+// Curtir/descurtir uma resenha: ajusta na hora todas as listas de resenhas em cache e confirma com a API.
+export function useCurtir() {
+  const queryClient = useQueryClient();
+  const alternar = (curtir, id) => (dados) =>
+    dados && {
+      ...dados,
+      pages: dados.pages.map((pagina) => ({
+        ...pagina,
+        itens: pagina.itens.map((r) =>
+          r.id === id && r.curti !== curtir
+            ? { ...r, curti: curtir, curtidas: r.curtidas + (curtir ? 1 : -1) }
+            : r,
+        ),
+      })),
+    };
+  return useMutation({
+    mutationFn: ({ id, curtir }) =>
+      api(`/avaliacoes/${id}/curtida`, { metodo: curtir ? 'PUT' : 'DELETE' }),
+    onMutate: async ({ id, curtir }) => {
+      await queryClient.cancelQueries({ queryKey: ['resenhas'] });
+      queryClient.setQueriesData({ queryKey: ['resenhas'] }, alternar(curtir, id));
+    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['resenhas'] }),
+  });
+}

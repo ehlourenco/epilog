@@ -639,7 +639,7 @@ Cada task é um PR: `git switch -c feat/<nome>` a partir de `main` atualizada, o
     - `GET /series/:tmdbId/resenhas?antes=` e `GET /perfis/:apelido/resenhas?antes=`.
   - Web: `useResenhas(filtros)` (infinita) com a chave `['resenhas', filtros]`; `<CartaoResenha resenha />` (a T14 acrescenta o botão de curtir); `<ListaResenhas filtros />`; a rota `/series/:tmdbId/avaliacao` (protegida).
 
-- [ ] **Passo 1: escrever os testes que falham.**
+- [x] **Passo 1: escrever os testes que falham.**
 
 ```js
 test('4.5 passa', () => expect(avaliacaoSchema.parse({ nota: 4.5 })).toEqual({ nota: 4.5, texto: null, contemSpoiler: false }));
@@ -649,16 +649,16 @@ test('texto só com espaços vira null e desliga o spoiler', () =>
 test('texto acima de 5000 caracteres rejeitado', () => expect(avaliacaoSchema.safeParse({ nota: 3, texto: 'a'.repeat(5001) }).success).toBe(false));
 ```
 
-- [ ] **Passo 2:** `npm test -w api`. Esperado: FALHA.
-- [ ] **Passo 3: implementar** a API e montar em `app.js`. Rodar `npm test -w api`. Esperado: PASSA.
-- [ ] **Passo 4: implementar o web.**
+- [x] **Passo 2:** `npm test -w api`. Esperado: FALHA.
+- [x] **Passo 3: implementar** a API e montar em `app.js`. Rodar `npm test -w api`. Esperado: PASSA.
+- [x] **Passo 4: implementar o web.**
   - `EntradaEstrelas`: grupo de 10 radios (0,5 a 5), com `fieldset`/`legend` e uso pelo teclado.
   - `PaginaAvaliacao`: nota, texto, caixa "Contém spoiler", Salvar e Excluir. O formulário vem preenchido com a `avaliacao` do estado.
   - `CartaoResenha`: autor (link para `/u/:apelido`), série (link), estrelas, data e texto. Com spoiler, o texto fica atrás do botão "Mostrar spoiler" (`aria-expanded`). Mostra a contagem de curtidas, só para leitura.
   - `PaginaSerie`: botão "Avaliar" (com `exigirSessao`), "Sua nota" quando existir e a seção "Resenhas".
   - `PaginaPerfilPublico`: seção "Resenhas".
   - Salvar ou excluir invalida `['estado-serie', tmdbId]` e `['resenhas']`.
-- [ ] **Passo 5: verificar.**
+- [x] **Passo 5: verificar.**
   - Dar nota 4,5 com texto e spoiler marcado: aparece na série e no perfil com o texto oculto até clicar.
   - Editar o texto: a data de publicação não muda.
   - Nota sem texto não aparece na lista de resenhas.
@@ -688,16 +688,16 @@ test('texto acima de 5000 caracteres rejeitado', () => expect(avaliacaoSchema.sa
     - `PUT /listas/:id/ordem { tmdbIds }`: o conjunto tem de ser **exatamente** o dos itens atuais, senão 400 `ordem_invalida`. Grava `ordem` = índice.
     - `GET /perfis/:apelido/listas`: filtra **explicitamente** `visibilidade = 'publica'`, mesmo quando o dono está vendo.
 
-- [ ] **Passo 1: escrever os testes que falham.** `novaListaSchema`: título `'  '` rejeitado; 81 caracteres rejeitado; visibilidade `'amigos'` rejeitada. `ordemSchema`: `[3, 3]` rejeitado; `[]` rejeitado.
-- [ ] **Passo 2:** `npm test -w api`. Esperado: FALHA. Implementar a API. Rodar de novo. Esperado: PASSA.
-- [ ] **Passo 3: implementar o web.**
+- [x] **Passo 1: escrever os testes que falham.** `novaListaSchema`: título `'  '` rejeitado; 81 caracteres rejeitado; visibilidade `'amigos'` rejeitada. `ordemSchema`: `[3, 3]` rejeitado; `[]` rejeitado.
+- [x] **Passo 2:** `npm test -w api`. Esperado: FALHA. Implementar a API. Rodar de novo. Esperado: PASSA.
+- [x] **Passo 3: implementar o web.**
   - `BotaoQueroAssistir`: alterna usando `estado.queroAssistir`, com `exigirSessao` e `disabled` enquanto a mutação roda.
   - `SeletorListas`: "Adicionar à lista", com as listas personalizadas marcadas pelo campo `contem`.
   - `PaginaMinhasListas`: Quero assistir primeiro, depois a criação de lista (título e visibilidade).
   - `PaginaLista`: itens com ↑/↓ para reordenar e remover, edição de título e visibilidade e exclusão, tudo só para o dono. A Quero assistir não oferece editar nem excluir.
   - Perfil público: seção "Listas".
   - Rotas `/me/listas` (protegida) e `/listas/:id`.
-- [ ] **Passo 4: verificar.**
+- [x] **Passo 4: verificar.**
   - Adicionar uma série à Quero assistir pela página da série e removê-la.
   - Criar uma lista pública com 3 séries, reordenar e conferir a ordem depois de recarregar.
   - A lista pública aparece no perfil numa aba anônima; uma lista privada aberta pela URL na aba anônima dá "Lista não encontrada".
@@ -718,7 +718,7 @@ test('texto acima de 5000 caracteres rejeitado', () => expect(avaliacaoSchema.sa
     - A T14 acrescenta rotas neste mesmo arquivo.
   - Web: `<BotaoSeguir apelido euSigo souEu />` não renderiza quando `souEu`. Atualiza o perfil de forma otimista e invalida `['perfil', apelido]`.
 
-- [ ] **Passo 1: escrever os testes que falham.**
+- [x] **Passo 1: escrever os testes que falham.**
 
 ```js
 test('seguir duas vezes → 204 nas duas', async () => {
@@ -733,8 +733,8 @@ test('seguir a si mesmo → 400', async () => {
 });
 ```
 
-- [ ] **Passo 2:** FALHA. Implementar. PASSA.
-- [ ] **Passo 3: verificar.** Com duas contas: A segue B pelo perfil e as contagens mudam; o duplo clique não quebra nada; deixar de seguir volta as contagens; o próprio perfil não mostra o botão.
+- [x] **Passo 2:** FALHA. Implementar. PASSA.
+- [x] **Passo 3: verificar.** Com duas contas: A segue B pelo perfil e as contagens mudam; o duplo clique não quebra nada; deixar de seguir volta as contagens; o próprio perfil não mostra o botão.
 - [ ] **Passo 4: commit e PR.** `git commit -m "feat: seguir perfis (RF06)"`
 
 ### Task 14 (PR `feat/rf06-feed`, depois do merge da T11): Curtir e feed
@@ -750,10 +750,10 @@ test('seguir a si mesmo → 400', async () => {
   - `GET /feed?antes=` → `listarResenhas(req.db, { soSeguidos: true }, antes)`.
   - Web: `<BotaoCurtir resenha />` (otimista, `aria-pressed`, `disabled` enquanto roda) dentro do `CartaoResenha`; rota `/feed` (protegida).
 
-- [ ] **Passo 1: escrever os testes que falham.** Curtir duas vezes (curtida com `23505`) → 204 nas duas. Curtir avaliação inexistente (`23503`) → 404 `avaliacao_nao_encontrada`. `GET /api/feed` sem sessão → 401.
-- [ ] **Passo 2:** FALHA. Implementar. PASSA.
-- [ ] **Passo 3: `PaginaFeed`.** `ListaResenhas` com `soSeguidos`. Estado vazio: "Siga perfis para ver as resenhas deles aqui".
-- [ ] **Passo 4: verificar.** A segue B; B publica uma resenha; ela aparece no topo do feed de A. A curte e a contagem sobe. Recarregar mantém o "curti". A resenha que B editar não sobe no feed.
+- [x] **Passo 1: escrever os testes que falham.** Curtir duas vezes (curtida com `23505`) → 204 nas duas. Curtir avaliação inexistente (`23503`) → 404 `avaliacao_nao_encontrada`. `GET /api/feed` sem sessão → 401.
+- [x] **Passo 2:** FALHA. Implementar. PASSA.
+- [x] **Passo 3: `PaginaFeed`.** `ListaResenhas` com `soSeguidos`. Estado vazio: "Siga perfis para ver as resenhas deles aqui".
+- [x] **Passo 4: verificar.** A segue B; B publica uma resenha; ela aparece no topo do feed de A. A curte e a contagem sobe. Recarregar mantém o "curti". A resenha que B editar não sobe no feed.
 - [ ] **Passo 5: commit e PR.** `git commit -m "feat: curtidas e feed (RF06)"`
 
 ### Task 15 (PR `feat/acabamento`, seg 30/11 – ter 01/12): Acabamento, dados de demonstração e ensaio

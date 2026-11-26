@@ -1,11 +1,12 @@
 import { useId, useState } from 'react';
 import { Link } from 'react-router';
 import { Poster } from '../componentes/Poster.jsx';
+import { BotaoCurtir } from '../social/BotaoCurtir.jsx';
 import { Estrelas } from './Estrelas.jsx';
 
 const dataLocal = (iso) => new Date(iso).toLocaleDateString('pt-BR');
 
-// `acoes` é o espaço para o botão de curtir (RF06).
+// `acoes` permite acrescentar outras ações ao cartão; o botão de curtir já vem embutido.
 export function CartaoResenha({ resenha, mostrarSerie = true, acoes = null }) {
   const [revelado, setRevelado] = useState(false);
   const idTexto = useId();
@@ -47,9 +48,7 @@ export function CartaoResenha({ resenha, mostrarSerie = true, acoes = null }) {
         </p>
         <div className="flex items-center gap-3 text-sm text-texto-suave">
           {acoes}
-          <span>
-            {resenha.curtidas} {resenha.curtidas === 1 ? 'curtida' : 'curtidas'}
-          </span>
+          <BotaoCurtir resenha={resenha} />
         </div>
       </div>
     </li>

@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { ErroApi, traduzirErroBanco } from '../erros.js';
+import { listarResenhas } from '../avaliacoes/resenhas.js';
 import { apelidoSchema } from '../perfis/esquemas.js';
+import { idPositivo } from '../util/validacao.js';
 
 const perfilNaoEncontrado = () =>
   new ErroApi(404, 'perfil_nao_encontrado', 'Perfil não encontrado.');
@@ -43,6 +45,31 @@ export function criarRotasSocial({ exigir }) {
       .eq('seguido_id', seguidoId);
     if (error) throw traduzirErroBanco(error);
     res.status(204).end();
+  });
+
+  rotas.put('/avaliacoes/:id/curtida', exigir, async (req, res) => {
+    const avaliacaoId = idPositivo.parse(req.params.id);
+    const { error } = await req.db.from('curtida').insert({ perfil_id: req.usuario.id, avaliacao_id: avaliacaoId });
+    if (error && error.code !== '23505') {
+      throw traduzirErroBanco(error, { referencia: 'avaliacao_nao_encontrada', mensagem: 'Resenha não encontrada.' });
+    }
+    res.status(204).end();
+  });
+
+  rotas.delete('/avaliacoes/:id/curtida', exigir, async (req, res) => {
+    const avaliacaoId = idPositivo.parse(req.params.id);
+    const { error } = await req.db
+      .from('curtida')
+      .delete()
+      .eq('perfil_id', req.usuario.id)
+      .eq('avaliacao_id', avaliacaoId);
+    if (error) throw traduzirErroBanco(error);
+    res.status(204).end();
+  });
+
+  // Feed: resenhas dos perfis seguidos, da mais recente para a mais antiga (por data de publicação).
+  rotas.get('/feed', exigir, async (req, res) => {
+    res.json(await listarResenhas(req.db, { soSeguidos: true }, req.query.antes));
   });
 
   return rotas;

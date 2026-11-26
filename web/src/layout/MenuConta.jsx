@@ -8,6 +8,7 @@ const ITENS = [
   { para: '/me/diario', rotulo: 'Diário' },
   { para: '/me/listas', rotulo: 'Minhas listas' },
   { para: '/me', rotulo: 'Perfil' },
+  { para: '/feed', rotulo: 'Atividade' },
 ];
 
 export function MenuConta() {

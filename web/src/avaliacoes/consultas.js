@@ -1,8 +1,9 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../lib/api.js';
 
-// filtros: { serieTmdbId } | { autorApelido } (a T14 acrescenta { soSeguidos } para o feed).
+// filtros: { serieTmdbId } | { autorApelido } | { soSeguidos } (feed).
 function caminhoDasResenhas(filtros) {
+  if (filtros.soSeguidos) return '/feed';
   if (filtros.serieTmdbId) return `/series/${filtros.serieTmdbId}/resenhas`;
   if (filtros.autorApelido) return `/perfis/${encodeURIComponent(filtros.autorApelido)}/resenhas`;
   throw new Error('Filtro de resenhas desconhecido');
