@@ -13,7 +13,11 @@ export function mapearResenha(linha) {
     contemSpoiler: linha.contem_spoiler,
     publicadoEm: linha.publicado_em,
     autor: { apelido: linha.autor_apelido },
-    serie: { tmdbId: linha.serie_tmdb_id, nome: linha.serie_nome, posterUrl: urlPoster(linha.poster_path) },
+    serie: {
+      tmdbId: linha.serie_tmdb_id,
+      nome: linha.serie_nome,
+      posterUrl: urlPoster(linha.poster_path),
+    },
     curtidas: Number(linha.curtidas),
     curti: linha.curti,
   };

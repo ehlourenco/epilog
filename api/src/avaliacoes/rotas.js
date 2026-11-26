@@ -21,7 +21,12 @@ function semErro({ data, error }, mapa) {
 
 async function idDaSerie(db, tmdbId) {
   const serie = semErro(await db.from('serie').select('id').eq('tmdb_id', tmdbId).maybeSingle());
-  if (!serie) throw new ErroApi(404, 'serie_nao_encontrada', 'Série não encontrada. Abra a página da série antes de avaliar.');
+  if (!serie)
+    throw new ErroApi(
+      404,
+      'serie_nao_encontrada',
+      'Série não encontrada. Abra a página da série antes de avaliar.',
+    );
   return serie.id;
 }
 
@@ -34,7 +39,12 @@ export function criarRotasAvaliacoes({ exigir }) {
     const { nota, texto, contemSpoiler } = avaliacaoSchema.parse(req.body ?? {});
     const serieId = await idDaSerie(req.db, tmdbId);
     const existente = semErro(
-      await req.db.from('avaliacao').select('id').eq('perfil_id', req.usuario.id).eq('serie_id', serieId).maybeSingle(),
+      await req.db
+        .from('avaliacao')
+        .select('id')
+        .eq('perfil_id', req.usuario.id)
+        .eq('serie_id', serieId)
+        .maybeSingle(),
     );
     if (existente) {
       const atualizada = semErro(
@@ -51,7 +61,13 @@ export function criarRotasAvaliacoes({ exigir }) {
     const criada = semErro(
       await req.db
         .from('avaliacao')
-        .insert({ perfil_id: req.usuario.id, serie_id: serieId, nota, texto, contem_spoiler: contemSpoiler })
+        .insert({
+          perfil_id: req.usuario.id,
+          serie_id: serieId,
+          nota,
+          texto,
+          contem_spoiler: contemSpoiler,
+        })
         .select(CAMPOS)
         .single(),
       { conflito: 'avaliacao_existente', mensagem: 'Você já avaliou esta série.' },
@@ -63,9 +79,15 @@ export function criarRotasAvaliacoes({ exigir }) {
     const tmdbId = idPositivo.parse(req.params.tmdbId);
     const serieId = await idDaSerie(req.db, tmdbId);
     const apagadas = semErro(
-      await req.db.from('avaliacao').delete().eq('perfil_id', req.usuario.id).eq('serie_id', serieId).select('id'),
+      await req.db
+        .from('avaliacao')
+        .delete()
+        .eq('perfil_id', req.usuario.id)
+        .eq('serie_id', serieId)
+        .select('id'),
     );
-    if (!apagadas?.length) throw new ErroApi(404, 'avaliacao_nao_encontrada', 'Você não avaliou esta série.');
+    if (!apagadas?.length)
+      throw new ErroApi(404, 'avaliacao_nao_encontrada', 'Você não avaliou esta série.');
     res.status(204).end();
   });
 

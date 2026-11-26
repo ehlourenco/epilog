@@ -9,7 +9,8 @@ export function codificarCursor({ chave, id }) {
 // `validarChave` (regex ou função) restringe a chave — ex.: data AAAA-MM-DD que exista — antes de ela chegar
 // a qualquer filtro do banco; o id precisa ser um inteiro seguro positivo.
 export function decodificarCursor(texto, validarChave = /^.+$/) {
-  const chaveValida = typeof validarChave === 'function' ? validarChave : (c) => validarChave.test(c);
+  const chaveValida =
+    typeof validarChave === 'function' ? validarChave : (c) => validarChave.test(c);
   try {
     const valor = JSON.parse(Buffer.from(texto, 'base64url').toString('utf8'));
     const idValido = Number.isSafeInteger(valor?.id) && valor.id > 0;
@@ -27,6 +28,8 @@ export function paginar(linhas, chaveDe) {
   const itens = linhas.slice(0, TAMANHO_PAGINA);
   const ultimo = itens.at(-1);
   const proximoCursor =
-    linhas.length > TAMANHO_PAGINA ? codificarCursor({ chave: chaveDe(ultimo), id: ultimo.id }) : null;
+    linhas.length > TAMANHO_PAGINA
+      ? codificarCursor({ chave: chaveDe(ultimo), id: ultimo.id })
+      : null;
   return { itens, proximoCursor };
 }

@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const FORMATO_DATA = /^\d{4}-\d{2}-\d{2}$/;
-export const dataExiste = (d) => !Number.isNaN(Date.parse(`${d}T00:00:00Z`)) && new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
+export const dataExiste = (d) =>
+  !Number.isNaN(Date.parse(`${d}T00:00:00Z`)) &&
+  new Date(`${d}T00:00:00Z`).toISOString().startsWith(d);
 
 // A data limite é a de hoje em UTC: no Brasil (UTC-3) a data local nunca passa dela,
 // então um registro feito às 23h continua válido. O banco aplica a mesma regra (current_date em UTC).
@@ -10,7 +12,9 @@ export function criarEsquemasDiario({ hoje = () => new Date() } = {}) {
     .string({ error: 'Informe a data.' })
     .regex(FORMATO_DATA, { error: 'Data inválida (use AAAA-MM-DD).' })
     .refine(dataExiste, { error: 'Data inválida.' })
-    .refine((d) => d <= hoje().toISOString().slice(0, 10), { error: 'A data não pode estar no futuro.' });
+    .refine((d) => d <= hoje().toISOString().slice(0, 10), {
+      error: 'A data não pode estar no futuro.',
+    });
 
   const novaEntrada = z.object({
     episodioId: z.number({ error: 'Episódio inválido.' }).int().positive(),

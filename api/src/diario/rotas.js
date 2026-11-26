@@ -8,7 +8,8 @@ import { criarEsquemasDiario, dataExiste, FORMATO_DATA } from './esquemas.js';
 const SELECT_ENTRADA =
   'id, assistido_em, revisita, episodio:episodio_id(id, numero, nome, temporada:temporada_id(numero, serie:serie_id(tmdb_id, nome, poster_path)))';
 const chaveDeData = (chave) => FORMATO_DATA.test(chave) && dataExiste(chave);
-const naoEncontrado = () => new ErroApi(404, 'registro_nao_encontrado', 'Registro não encontrado no seu diário.');
+const naoEncontrado = () =>
+  new ErroApi(404, 'registro_nao_encontrado', 'Registro não encontrado no seu diário.');
 
 function semErro({ data, error }, mapa) {
   if (error) throw traduzirErroBanco(error, mapa);
@@ -93,7 +94,12 @@ export function criarRotasDiario({ exigir, hoje }) {
   rotas.delete('/me/diario/:id', exigir, async (req, res) => {
     const id = idPositivo.parse(req.params.id);
     const apagadas = semErro(
-      await req.db.from('diario').delete().eq('id', id).eq('perfil_id', req.usuario.id).select('id'),
+      await req.db
+        .from('diario')
+        .delete()
+        .eq('id', id)
+        .eq('perfil_id', req.usuario.id)
+        .select('id'),
     );
     if (!apagadas?.length) throw naoEncontrado();
     res.status(204).end();

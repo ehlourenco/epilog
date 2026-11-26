@@ -25,7 +25,12 @@ export function criarRotasCatalogo({ catalogo }) {
   });
 
   rotas.get('/series/:tmdbId/temporadas/:n', async (req, res) => {
-    res.json(await catalogo.obterTemporada(idTmdb.parse(req.params.tmdbId), numeroTemporada.parse(req.params.n)));
+    res.json(
+      await catalogo.obterTemporada(
+        idTmdb.parse(req.params.tmdbId),
+        numeroTemporada.parse(req.params.n),
+      ),
+    );
   });
 
   return rotas;

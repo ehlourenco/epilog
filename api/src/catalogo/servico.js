@@ -1,5 +1,11 @@
 import { ErroApi } from '../erros.js';
-import { mapearResultadoBusca, mapearSerie, mapearTemporada, ordenarTemporadas, urlPoster } from './mapeadores.js';
+import {
+  mapearResultadoBusca,
+  mapearSerie,
+  mapearTemporada,
+  ordenarTemporadas,
+  urlPoster,
+} from './mapeadores.js';
 
 export function estaFresco(data, horas, agora) {
   if (!horas || !data) return false;
@@ -13,7 +19,8 @@ const catalogoIndisponivel = (erro) => erro instanceof ErroApi && erro.status ==
 export function criarServicoCatalogo({ tmdb, repositorio, cacheHoras, agora = () => new Date() }) {
   async function carregarSerie(tmdbId) {
     const linha = await repositorio.buscarSerie(tmdbId);
-    if (linha && estaFresco(linha.atualizadoEm, cacheHoras, agora())) return { serie: linha, origem: 'cache' };
+    if (linha && estaFresco(linha.atualizadoEm, cacheHoras, agora()))
+      return { serie: linha, origem: 'cache' };
     try {
       const pt = await tmdb.serie(tmdbId, 'pt-BR');
       const en = pt.overview ? null : await tmdb.serie(tmdbId, 'en-US');
@@ -58,7 +65,11 @@ export function criarServicoCatalogo({ tmdb, repositorio, cacheHoras, agora = ()
         origem,
       });
 
-      if (linha && linha.episodios.length > 0 && estaFresco(linha.episodiosAtualizadosEm, cacheHoras, agora())) {
+      if (
+        linha &&
+        linha.episodios.length > 0 &&
+        estaFresco(linha.episodiosAtualizadosEm, cacheHoras, agora())
+      ) {
         return resposta(linha, 'cache');
       }
       try {
@@ -69,9 +80,14 @@ export function criarServicoCatalogo({ tmdb, repositorio, cacheHoras, agora = ()
         const salva = await repositorio.salvarTemporada(serie.id, mapeada);
         return resposta({ ...mapeada, episodios: salva.episodios }, 'tmdb');
       } catch (erro) {
-        if (catalogoIndisponivel(erro) && linha?.episodios.length > 0) return resposta(linha, 'cache_vencido');
+        if (catalogoIndisponivel(erro) && linha?.episodios.length > 0)
+          return resposta(linha, 'cache_vencido');
         if (erro instanceof ErroApi && erro.status === 404) {
-          throw new ErroApi(404, 'nao_encontrado_no_catalogo', 'Não encontramos essa temporada no catálogo.');
+          throw new ErroApi(
+            404,
+            'nao_encontrado_no_catalogo',
+            'Não encontramos essa temporada no catálogo.',
+          );
         }
         throw erro;
       }

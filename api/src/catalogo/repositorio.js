@@ -32,7 +32,11 @@ export function criarRepositorioCatalogo(admin) {
         generos: linha.generos ?? [],
         posterPath: linha.poster_path,
         atualizadoEm: new Date(linha.atualizado_em),
-        temporadas: linha.temporada.map((t) => ({ numero: t.numero, nome: t.nome, qtdEpisodios: t.qtd_episodios })),
+        temporadas: linha.temporada.map((t) => ({
+          numero: t.numero,
+          nome: t.nome,
+          qtdEpisodios: t.qtd_episodios,
+        })),
       };
     },
 
@@ -78,7 +82,9 @@ export function criarRepositorioCatalogo(admin) {
       const linha = semErro(
         await admin
           .from('temporada')
-          .select('id, numero, nome, episodios_atualizados_em, episodio(id, numero, nome, descricao)')
+          .select(
+            'id, numero, nome, episodios_atualizados_em, episodio(id, numero, nome, descricao)',
+          )
           .eq('serie_id', serieId)
           .eq('numero', numero)
           .maybeSingle(),
@@ -88,7 +94,9 @@ export function criarRepositorioCatalogo(admin) {
         id: linha.id,
         numero: linha.numero,
         nome: linha.nome,
-        episodiosAtualizadosEm: linha.episodios_atualizados_em ? new Date(linha.episodios_atualizados_em) : null,
+        episodiosAtualizadosEm: linha.episodios_atualizados_em
+          ? new Date(linha.episodios_atualizados_em)
+          : null,
         episodios: linha.episodio.map(paraEpisodio).sort(porNumero),
       };
     },

@@ -4,5 +4,13 @@ import { z } from 'zod';
 export const MAIOR_INTEIRO = 2_147_483_647;
 const ID_INVALIDO = { error: 'Identificador inválido.' };
 
-export const idPositivo = z.coerce.number(ID_INVALIDO).int(ID_INVALIDO).positive(ID_INVALIDO).max(MAIOR_INTEIRO, ID_INVALIDO);
-export const numeroTemporada = z.coerce.number(ID_INVALIDO).int(ID_INVALIDO).min(0, ID_INVALIDO).max(MAIOR_INTEIRO, ID_INVALIDO);
+export const idPositivo = z.coerce
+  .number(ID_INVALIDO)
+  .int(ID_INVALIDO)
+  .positive(ID_INVALIDO)
+  .max(MAIOR_INTEIRO, ID_INVALIDO);
+export const numeroTemporada = z.coerce
+  .number(ID_INVALIDO)
+  .int(ID_INVALIDO)
+  .min(0, ID_INVALIDO)
+  .max(MAIOR_INTEIRO, ID_INVALIDO);

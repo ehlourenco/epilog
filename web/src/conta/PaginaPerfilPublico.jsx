@@ -1,10 +1,36 @@
 import { useParams } from 'react-router';
 import { ListaResenhas } from '../avaliacoes/ListaResenhas.jsx';
+import { Link } from 'react-router';
 import { Carregando, Erro, Vazio } from '../componentes/Estados.jsx';
+import { useListasDoPerfil } from '../listas/consultas.js';
 import { usePerfil } from './consultas.js';
 
 const MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 const desde = (iso) => `${MESES[Number(iso.slice(5, 7)) - 1]}/${iso.slice(0, 4)}`;
+
+function ListasPublicas({ apelido }) {
+  const listas = useListasDoPerfil(apelido);
+  if (listas.isPending) return <Carregando />;
+  if (listas.isError) return <Erro erro={listas.error} aoTentarDeNovo={listas.refetch} />;
+  if (listas.data.length === 0) return <Vazio mensagem="Nenhuma lista pública." />;
+  return (
+    <ul className="grid gap-2 sm:grid-cols-2">
+      {listas.data.map((l) => (
+        <li key={l.id}>
+          <Link
+            to={`/listas/${l.id}`}
+            className="flex min-h-12 items-center justify-between rounded-md border border-borda bg-superficie px-4 py-2 hover:border-destaque"
+          >
+            <span className="font-medium">{l.titulo}</span>
+            <span className="text-sm text-texto-suave">
+              {l.qtdItens} {l.qtdItens === 1 ? 'série' : 'séries'}
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export function PaginaPerfilPublico() {
   const { apelido } = useParams();
@@ -37,6 +63,10 @@ export function PaginaPerfilPublico() {
           filtros={{ autorApelido: p.apelido }}
           vazio="Nenhuma resenha publicada ainda."
         />
+      </section>
+      <section className="space-y-3">
+        <h2 className="text-xl font-semibold">Listas</h2>
+        <ListasPublicas apelido={p.apelido} />
       </section>
     </article>
   );

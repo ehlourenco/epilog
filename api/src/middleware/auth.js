@@ -1,6 +1,7 @@
 import { ErroApi } from '../erros.js';
 
-const tokenInvalido = () => new ErroApi(401, 'token_invalido', 'Sua sessão expirou ou é inválida. Entre novamente.');
+const tokenInvalido = () =>
+  new ErroApi(401, 'token_invalido', 'Sua sessão expirou ou é inválida. Entre novamente.');
 
 // Sem Authorization: visitante (cliente anônimo). Com "Bearer <token>" válido: o banco passa a
 // enxergar o usuário (RLS). Header presente mas inválido: 401 em qualquer rota, para o front relogar.
@@ -19,7 +20,11 @@ export function criarAuth(clientes) {
     // auth-js devolve falhas de rede como AuthRetryableFetchError com status 0: isso é indisponibilidade,
     // não token inválido — responder 401 faria o front deslogar o usuário por um soluço de rede.
     if (error && (!error.status || error.status >= 500)) {
-      throw new ErroApi(503, 'autenticacao_indisponivel', 'Não foi possível validar sua sessão agora.');
+      throw new ErroApi(
+        503,
+        'autenticacao_indisponivel',
+        'Não foi possível validar sua sessão agora.',
+      );
     }
     if (error || !data?.user) throw tokenInvalido();
 
@@ -29,7 +34,8 @@ export function criarAuth(clientes) {
   }
 
   function exigirAutenticacao(req, res, next) {
-    if (!req.usuario) throw new ErroApi(401, 'nao_autenticado', 'Entre na sua conta para continuar.');
+    if (!req.usuario)
+      throw new ErroApi(401, 'nao_autenticado', 'Entre na sua conta para continuar.');
     next();
   }
 

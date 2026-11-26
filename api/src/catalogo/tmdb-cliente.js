@@ -12,21 +12,39 @@ export function criarClienteTmdb({ token, fetch = globalThis.fetch, timeoutMs = 
         signal: AbortSignal.timeout(timeoutMs),
       });
     } catch {
-      throw new ErroApi(502, 'catalogo_indisponivel', 'O catálogo de séries está indisponível no momento.');
+      throw new ErroApi(
+        502,
+        'catalogo_indisponivel',
+        'O catálogo de séries está indisponível no momento.',
+      );
     }
     if (resposta.status === 404) {
-      throw new ErroApi(404, 'nao_encontrado_no_catalogo', 'Não encontramos essa série no catálogo.');
+      throw new ErroApi(
+        404,
+        'nao_encontrado_no_catalogo',
+        'Não encontramos essa série no catálogo.',
+      );
     }
     if (!resposta.ok) {
-      throw new ErroApi(502, 'catalogo_indisponivel', 'O catálogo de séries está indisponível no momento.');
+      throw new ErroApi(
+        502,
+        'catalogo_indisponivel',
+        'O catálogo de séries está indisponível no momento.',
+      );
     }
     return resposta.json();
   }
 
   return {
     buscarSeries: (q, pagina) =>
-      obter('/search/tv', { query: q, page: String(pagina), language: 'pt-BR', include_adult: 'false' }),
+      obter('/search/tv', {
+        query: q,
+        page: String(pagina),
+        language: 'pt-BR',
+        include_adult: 'false',
+      }),
     serie: (tmdbId, idioma) => obter(`/tv/${tmdbId}`, { language: idioma }),
-    temporada: (tmdbId, numero, idioma) => obter(`/tv/${tmdbId}/season/${numero}`, { language: idioma }),
+    temporada: (tmdbId, numero, idioma) =>
+      obter(`/tv/${tmdbId}/season/${numero}`, { language: idioma }),
   };
 }

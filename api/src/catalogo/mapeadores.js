@@ -48,7 +48,9 @@ export function mapearSerie(pt, en = null) {
 }
 
 export function mapearTemporada(pt, en = null) {
-  const descricaoEn = new Map((en?.episodes ?? []).map((e) => [e.episode_number, textoOuNulo(e.overview)]));
+  const descricaoEn = new Map(
+    (en?.episodes ?? []).map((e) => [e.episode_number, textoOuNulo(e.overview)]),
+  );
   return {
     numero: pt.season_number,
     nome: textoOuNulo(pt.name),

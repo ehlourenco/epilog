@@ -20,7 +20,11 @@ export function criarRotasPerfis({ exigir }) {
 
   rotas.get('/perfis/disponivel', async (req, res) => {
     const apelido = apelidoSchema.parse(req.query.apelido);
-    const { data, error } = await req.db.from('perfil').select('id').eq('apelido', apelido).maybeSingle();
+    const { data, error } = await req.db
+      .from('perfil')
+      .select('id')
+      .eq('apelido', apelido)
+      .maybeSingle();
     if (error) throw traduzirErroBanco(error);
     res.json({ disponivel: !data });
   });
@@ -80,7 +84,10 @@ export function criarRotasPerfis({ exigir }) {
       .select('id, apelido, criado_em')
       .single();
     if (error) {
-      throw traduzirErroBanco(error, { conflito: 'apelido_em_uso', mensagem: 'Esse apelido já está em uso.' });
+      throw traduzirErroBanco(error, {
+        conflito: 'apelido_em_uso',
+        mensagem: 'Esse apelido já está em uso.',
+      });
     }
     res.json(paraPerfil(data));
   });

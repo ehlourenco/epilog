@@ -14,7 +14,9 @@ export function criarRotasEstado({ exigir }) {
 
   rotas.get('/me/series/:tmdbId/estado', exigir, async (req, res) => {
     const tmdbId = idTmdb.parse(req.params.tmdbId);
-    const serie = semErro(await req.db.from('serie').select('id').eq('tmdb_id', tmdbId).maybeSingle());
+    const serie = semErro(
+      await req.db.from('serie').select('id').eq('tmdb_id', tmdbId).maybeSingle(),
+    );
 
     const avaliacao = serie
       ? semErro(
@@ -46,7 +48,10 @@ export function criarRotasEstado({ exigir }) {
         contemSpoiler: avaliacao.contem_spoiler,
         publicadoEm: avaliacao.publicado_em,
       },
-      queroAssistir: { listaId: queroAssistir?.id ?? null, contem: queroAssistir ? contem(queroAssistir) : false },
+      queroAssistir: {
+        listaId: queroAssistir?.id ?? null,
+        contem: queroAssistir ? contem(queroAssistir) : false,
+      },
       listas: listas
         .filter((l) => l.tipo === 'personalizada')
         .map((l) => ({ id: l.id, titulo: l.titulo, contem: contem(l) })),

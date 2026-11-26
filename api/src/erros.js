@@ -15,7 +15,11 @@ export function traduzirErroBanco(erro, mapa = {}) {
     case '23505':
       return new ErroApi(409, mapa.conflito ?? 'conflito', mapa.mensagem ?? 'Registro já existe.');
     case '23503':
-      return new ErroApi(404, mapa.referencia ?? 'referencia_inexistente', mapa.mensagem ?? 'Referência não encontrada.');
+      return new ErroApi(
+        404,
+        mapa.referencia ?? 'referencia_inexistente',
+        mapa.mensagem ?? 'Referência não encontrada.',
+      );
     case '23514':
       return new ErroApi(400, 'validacao', 'Dados fora das regras permitidas.');
     case '42501':
@@ -37,7 +41,9 @@ export function tratadorDeErros(err, req, res, next) {
   if (err?.type === 'entity.parse.failed') {
     return res
       .status(400)
-      .json({ erro: { codigo: 'json_invalido', mensagem: 'Corpo da requisição não é um JSON válido.' } });
+      .json({
+        erro: { codigo: 'json_invalido', mensagem: 'Corpo da requisição não é um JSON válido.' },
+      });
   }
   console.error(err);
   return res

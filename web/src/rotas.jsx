@@ -9,6 +9,8 @@ import { PaginaDiario } from './diario/PaginaDiario.jsx';
 import { PaginaMeuPerfil } from './conta/PaginaMeuPerfil.jsx';
 import { PaginaPerfilPublico } from './conta/PaginaPerfilPublico.jsx';
 import { Layout } from './layout/Layout.jsx';
+import { PaginaLista } from './listas/PaginaLista.jsx';
+import { PaginaMinhasListas } from './listas/PaginaMinhasListas.jsx';
 import { PaginaNaoEncontrada } from './PaginaNaoEncontrada.jsx';
 import { PaginaSobre } from './sobre/PaginaSobre.jsx';
 
@@ -44,6 +46,15 @@ export const roteador = createBrowserRouter([
           </RotaProtegida>
         ),
       },
+      {
+        path: 'me/listas',
+        element: (
+          <RotaProtegida>
+            <PaginaMinhasListas />
+          </RotaProtegida>
+        ),
+      },
+      { path: 'listas/:id', element: <PaginaLista /> },
       { path: 'u/:apelido', element: <PaginaPerfilPublico /> },
       { path: 'sobre', element: <PaginaSobre /> },
       { path: '*', element: <PaginaNaoEncontrada /> },

@@ -5,6 +5,8 @@ import { Estrelas } from '../avaliacoes/Estrelas.jsx';
 import { ListaResenhas } from '../avaliacoes/ListaResenhas.jsx';
 import { Carregando, Erro, Vazio } from '../componentes/Estados.jsx';
 import { Poster } from '../componentes/Poster.jsx';
+import { BotaoQueroAssistir } from '../listas/BotaoQueroAssistir.jsx';
+import { SeletorListas } from '../listas/SeletorListas.jsx';
 import { AvisoCache } from './AvisoCache.jsx';
 import { useEstadoSerie, useSerie } from './consultas.js';
 
@@ -72,6 +74,8 @@ export function PaginaSerie() {
                 Sua nota: <Estrelas nota={minhaAvaliacao.nota} />
               </span>
             )}
+            <BotaoQueroAssistir tmdbId={String(serie.tmdbId)} />
+            <SeletorListas tmdbId={String(serie.tmdbId)} />
           </div>
         </div>
       </div>
